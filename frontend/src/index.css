@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@media (prefers-reduced-motion: no-preference){
+    .hero-animation{
+        animation: fade-in linear forwards;
+        animation-timeline: view();
+        animation-range: exit 150px;
+    }
+    @keyframes fade-in {
+        25% {
+            opacity: 1
+        }
+        85%, 100% {
+            opacity: 0;
+        }
+    }
+}
+html {
+    scroll-behavior: smooth;
+}
+
+.image-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+.toast-success{
+    background-color: green;
+    color: white
+}
+.toast-error{
+    background-color: red;
+    color: white;
+}
+
+.underline-animation:after{
+    position: absolute;
+    bottom: -5px;
+    left:0;
+    content: " ";
+    width: 0;
+    height: 1px;
+    background-color: white;
+}
+
+.underline-animation:hover:after{
+    position: absolute;
+    bottom: 7px;
+    left:0;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    transition: 0.25s;
+}
+
+.active-link::after{
+    bottom: 7px;
+    left:0;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: white;
+}
+.datePicker {
+    width: 100%;
+    background-color: red;
+    height: 100%;
+}
+  
+  .PillList-item input[type="checkbox"] {
+    display: none;
+  }
+
+  .PillList-item input[type="checkbox"]:checked + .PillList-label {
+    background-color: #0338ab;
+    color: #fff;
+  }
+
+.num-input::-webkit-outer-spin-button, .num-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* .dropdown::before{
+    content: " ";
+    height: 20px;
+    width: 20px;
+    top: 10px;
+    left: 50%;
+    background-color: white;
+    transform: rotate(45deg) translateX(-60%);
+    position: absolute;
+} */
+.dropdown::after{
+    content: " ";
+    height: 10px;
+    width: 100%;
+    top: -10px;
+    background-color: transparent;
+    z-index: 1;
+    position: absolute;
+}
+
+  
+  
