@@ -36,7 +36,7 @@ export const validateToken = async () => {
 
 export const login = async (formData) => {
     try {
-        console.log("Entered")
+        console.log("Entered", API_BASE_URL)
         const response = await axios.post(`${API_BASE_URL}/api/users/login`, formData, {
             headers: {
                 "Content-Type": "application/json"
@@ -68,13 +68,12 @@ export const getHotelsByUser = async () => {
 
 export const googleLogin = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/api/users/google`, {
+        const response = await axios.get(`${API_BASE_URL}/api/users/google/redirect`, {
             headers: {
                 "Content-Type": "application/json",
             },
             withCredentials: true
         })
-        console.log(response, "Inside frontned reply")
         if (response.status !== 200) {
             throw new Error(response.data.message)
         }
@@ -258,10 +257,9 @@ export const getTravellers = async () => {
 
 export const loginUserWithGoogle = async () => {
     try {
-        const response = await axios.get("http://localhost:3000/api/users/google", {
+        const response = await axios.get(`${API_BASE_URL}/api/users/google`, {
             withCredentials: true
         })
-        console.log(response, "In api")
     } catch (error) {
         
     }

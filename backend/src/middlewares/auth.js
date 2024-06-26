@@ -50,6 +50,7 @@ export async function hotelValidation(req, res, next) {
 }
 export async function verifyToken(req, res, next) {
     const token = req.cookies['auth-token'];
+    console.log(token , "inside token")
     if (!token) {
         return res.status(401).json({
             message: "Unauthorized"

@@ -5,7 +5,11 @@ import Google from "../../assets/google-logo.png";
 import { useMutation, useQueryClient } from "react-query";
 import { useAppContext } from "../../../context/AppContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
 function SignInForm({ toggleModalVisible }) {
+  
   const location = useLocation();
   const { register, handleSubmit, formState, reset } = useForm({
     mode: "onChange",
@@ -33,7 +37,7 @@ function SignInForm({ toggleModalVisible }) {
     let top = (screen.height - 400) / 3;
 
     let myWindow = window.open(
-      `http://localhost:3000/api/users/google/redirect`,
+      `${API_BASE_URL}/api/users/google/redirect`,
       "Tourvista",
       "resizable=yes, width=" +
         600 +
