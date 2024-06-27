@@ -2,7 +2,6 @@ import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useMutation } from "react-query";
 import * as apiClient from "../../api/api.js";
-import User from "../../../backend/src/models/user.js";
 import { useAppContext } from "../../context/AppContext.jsx";
 const Security = () => {
   const methods = useForm({
