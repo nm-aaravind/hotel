@@ -98,10 +98,11 @@ router.get('/validateToken', verifyToken, async (req, res) => {
 })
 
 router.post('/logout', async (req, res) => {
-    res.clearCookie('auth-token', {
+    res.cookie('auth-token', '', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none'
+        sameSite: 'none',
+        expires: Date.now()
     })
     return res.status(200).json({
         message: "Signed out"
