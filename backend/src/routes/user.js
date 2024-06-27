@@ -33,7 +33,7 @@ router.post('/register', signUpValidation, async (req, res) => {
             })
         res.cookie("auth-token", token, {
             httpOnly: true,
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'none',
             maxAge: 86400000
         })
@@ -76,6 +76,7 @@ router.post('/login', loginValidation, async (req, res) => {
         res.cookie("auth-token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
+            sameSite: "none",
             maxAge: 86400000
         })
         return res.status(200).json({
@@ -186,9 +187,10 @@ router.get("/google/redirect",passport.authenticate("google",{
         {
             expiresIn: '1d'
         })
+    console.log("DEI velayadadha")
     res.cookie("auth-token", token, {
         httpOnly: true,
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'none',
         maxAge: 86400000
     })

@@ -9,7 +9,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 function SignInForm({ toggleModalVisible }) {
-  
+
   const location = useLocation();
   const { register, handleSubmit, formState, reset } = useForm({
     mode: "onChange",
