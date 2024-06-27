@@ -34,6 +34,7 @@ router.post('/register', signUpValidation, async (req, res) => {
         res.cookie("auth-token", token, {
             httpOnly: true,
             secure: false,
+            sameSite: 'none',
             maxAge: 86400000
         })
         return res.status(200).json({
@@ -188,6 +189,7 @@ router.get("/google/redirect",passport.authenticate("google",{
     res.cookie("auth-token", token, {
         httpOnly: true,
         secure: false,
+        sameSite: 'none',
         maxAge: 86400000
     })
     return res.send("<script>window.close();</script>")
