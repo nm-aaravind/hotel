@@ -89,7 +89,8 @@ export const logout = async () => {
         const response = await axios.post(`${API_BASE_URL}/api/users/logout`, {}, {
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            withCredentials: true
         })
         if (!response) {
             throw new Error("Can't sign out")
