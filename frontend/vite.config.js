@@ -9,7 +9,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['mongoose']
+      external: ['mongoose','bcryptjs']
     },
   },
 })
