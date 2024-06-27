@@ -23,7 +23,8 @@ export const register = async (formData) => {
 export const validateToken = async () => {
     try {
         const response = await axios.get(`${API_BASE_URL}/api/users/validateToken`, {
-            withCredentials: true
+            withCredentials: true,
+            
         }); //credentials to be added
         if (!response) {
             return false

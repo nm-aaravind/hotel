@@ -7,5 +7,9 @@ export default defineConfig({
   optimizeDeps: {
     // exclude: ['bcrypt']
   },
-  
+  build: {
+    rollupOptions: {
+      external: ['mongoose']
+    },
+  },
 })

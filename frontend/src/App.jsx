@@ -53,9 +53,10 @@ import Settings from "./components/Settings.jsx";
 import Security from "./components/Security.jsx";
 import OtherTravellers from "./components/OtherTravellers.jsx";
 import SettingsLayout from "./layouts/SettingsLayout.jsx";
+const node_ver = import.meta.env.NODE_VERSION
 function App() {
   const { isLoggedIn } = useAppContext();
-
+  console.log(node_ver, "H")
   return (
     <Router>
       <Routes>
