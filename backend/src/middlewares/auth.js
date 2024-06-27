@@ -49,6 +49,7 @@ export async function hotelValidation(req, res, next) {
     next()
 }
 export async function verifyToken(req, res, next) {
+    console.log(req.cookies)
     const token = req.cookies['auth-token'];
     console.log(token , "inside token")
     if (!token) {
