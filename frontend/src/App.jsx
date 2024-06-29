@@ -53,9 +53,11 @@ import Settings from "./components/Settings.jsx";
 import Security from "./components/Security.jsx";
 import OtherTravellers from "./components/OtherTravellers.jsx";
 import SettingsLayout from "./layouts/SettingsLayout.jsx";
-const node_ver = import.meta.env.NODE_VERSION
+import { Elements } from "@stripe/react-stripe-js";
+import MyBookings from "./components/MyBookings.jsx";
+const node_ver = import.meta.env.NODE_VERSION;
 function App() {
-  const { isLoggedIn } = useAppContext();
+  const { isLoggedIn, stripe } = useAppContext();
   return (
     <Router>
       <Routes>
@@ -68,7 +70,16 @@ function App() {
               <Route path="add-hotel" element={<HotelForm />} />
               <Route path="my-hotels" element={<ManageHotels />} />
               <Route path="mysettings" element={<Settings />} />
-              <Route path="hotels/booking/:id" element={<BookingDetails />} />
+              <Route
+                path="hotels/booking/:id"
+                element={
+                  <Elements stripe={stripe}>
+                    <BookingDetails />
+                  </Elements>
+                }
+              />
+              
+              <Route path="my-trips" element={<MyBookings />} />
               <Route path="mysettings" element={<SettingsLayout />}>
                 <Route path="profile" element={<UserProfile />} />
                 <Route path="security" element={<Security />} />

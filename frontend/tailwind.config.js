@@ -10,7 +10,7 @@ export default {
         title: ["Orbitron", 'sans-serif']
       },
       backgroundImage: {
-        landingBg: "url('./src/assets/landing-bg.jpg')",
+        landingBg: "url('/landing-bg.jpg')",
       },
       boxShadow:{
         hero: '0 0 250px black inset',

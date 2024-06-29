@@ -1,13 +1,17 @@
 import express from "express"
 import { upload } from '../middlewares/multer.js';
 import cloudinary from '../utils/cloudinary.js';
-import { hotelValidation, verifyToken } from "../middlewares/auth.js";
+import { hotelValidation, verifyToken, bookingValidation } from "../middlewares/auth.js";
 import Hotel from '../models/hotel.js';
 import Room from "../models/room.js";
 import pLimit from "p-limit"
+import Stripe from 'stripe'
+import Booking from "../models/bookings.js";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 const router = express.Router();
 
-router.post('/add-hotel', verifyToken ,upload.array('imageURLS', 5), hotelValidation, async (req, res) => {
+router.post('/add-hotel', verifyToken, upload.array('imageURLS', 5), hotelValidation, async (req, res) => {
     try {
         const limit = pLimit(5)
         let uploadedURLS = null;
@@ -17,7 +21,7 @@ router.post('/add-hotel', verifyToken ,upload.array('imageURLS', 5), hotelValida
                 const b64 = Buffer.from(photo.buffer).toString('base64')
                 const dataURI = "data:" + photo.mimetype + ";base64," + b64
                 return limit(async () => {
-                    const result = cloudinary.uploader.upload(dataURI, {folder: 'tourvista'})
+                    const result = cloudinary.uploader.upload(dataURI, { folder: 'tourvista' })
                     return result
                 })
             })
@@ -64,7 +68,7 @@ router.post('/add-hotel', verifyToken ,upload.array('imageURLS', 5), hotelValida
 
         const roomIds = newRooms.map((room) => room._id)
 
-        if(!newRooms){
+        if (!newRooms) {
             await Hotel.deleteOne(createdHotel._id)
             throw new Error("Cannot add rooms to the hotel")
         }
@@ -100,7 +104,7 @@ router.get("/my-hotels", verifyToken, async (req, res) => {
     }
 })
 
-router.get("/hotel/:hotelid" , async (req, res) => {
+router.get("/hotel/:hotelid", async (req, res) => {
     const hotelId = req.params.hotelid
     try {
         const hotel = await Hotel.findById(hotelId).populate('rooms')
@@ -112,7 +116,7 @@ router.get("/hotel/:hotelid" , async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(500).json({
-            message:"Something went wrong"
+            message: "Something went wrong"
         })
     }
 })
@@ -120,19 +124,19 @@ router.get("/hotel/:hotelid" , async (req, res) => {
 router.get("/cities/:search", async (req, res) => {
     try {
         const search = req.params.search
-        const searchValues = await Hotel.find({city: {$regex: search, $options: 'i'}}).select("city country -_id").limit(3)
+        const searchValues = await Hotel.find({ city: { $regex: search, $options: 'i' } }).select("city country -_id").limit(3)
         return res.status(200).json({
             data: searchValues
         })
     } catch (error) {
         console.log(error)
         return res.status(500).json({
-            message:"Something went wrong"
+            message: "Something went wrong"
         })
     }
 })
 
-router.put("/edit/:hotelid",verifyToken, upload.array("images"), async (req, res) => {
+router.put("/edit/:hotelid", verifyToken, upload.array("images"), async (req, res) => {
     try {
         //wrong upload.array()
         const hotelDetails = req.body;
@@ -141,18 +145,18 @@ router.put("/edit/:hotelid",verifyToken, upload.array("images"), async (req, res
         const hotel = await Hotel.findOneAndUpdate({
             _id: req.params.hotelid,
             userId: req.user
-        }, hotelDetails, { new : true })
+        }, hotelDetails, { new: true })
 
-        if(!hotel){
+        if (!hotel) {
             return res.status(404).json({
                 message: "Hotel not found"
             })
         }
         console.log(hotel, "After updating")
 
-        
+
     } catch (error) {
-        
+
     }
 
 })
@@ -161,7 +165,7 @@ router.delete("/delete", verifyToken, async (req, res) => {
     try {
         const { hotelId } = req.query
         const response = await Hotel.findByIdAndDelete(hotelId)
-        if(!response){
+        if (!response) {
             throw Error("Cannot delete hotel")
         }
         return res.status(200).json({
@@ -170,7 +174,92 @@ router.delete("/delete", verifyToken, async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(400).json({
-            message:"Something went wrong"
+            message: "Something went wrong"
+        })
+    }
+})
+
+router.post("/booking/payment", verifyToken, async (req, res) => {
+    try {
+        const { numberOfNights } = req.body;
+        const { roomId, hotelId } = req.query
+
+        const room = await Room.findById(roomId);
+        if (!room || !hotelId || !numberOfNights) {
+            return res.status(400).json({
+                message: "Invalid request"
+            })
+        }
+
+        const totalCost = room.price * numberOfNights * 100
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: totalCost,
+            currency: "inr",
+            metadata: {
+                hotelId,
+                roomId,
+                userId: req.user
+            }
+        })
+        if (!paymentIntent.client_secret) {
+            return res.status(500).json({
+                message: "Error initializing payment"
+            })
+        }
+        return res.status(200).json({
+            data: {
+                totalCost,
+                paymentIntent,
+                client: paymentIntent.client_secret.toString()
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            message: "Something went wrong"
+        }
+        )
+    }
+})
+
+router.post("/booking", verifyToken, bookingValidation, async (req, res) => {
+    try {
+        
+        const { hotelId, roomId } = req.query
+        const paymentIntentObj = req.body.paymentIntent
+        const data = req.body
+        
+        const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentObj.id)
+        if (!paymentIntent) {
+            return res.status(400).json({
+                message: "Payment request invalid"
+            })
+        }
+        if (paymentIntent.metadata.roomId != roomId || paymentIntent.metadata.userId != req.user) {
+            return res.status(400).json({
+                message: "Payment request mismatch"
+            })
+        }
+        if (paymentIntent.status != 'succeeded') {
+            return res.status(400).json({
+                message: "Payment failed"
+            })
+        }
+        const booking = await Booking.create({
+            hotelId, roomId, user: req.user, roomCount: data.roomCount, checkIn: data.checkIn, checkOut: data.checkOut, totalCost: paymentIntent.amount / 100, travellers: data.travellers
+        })
+        if(!booking){
+            return res.status(400).json({
+                message:"Booking failed, Something went wrong"
+            })
+        }
+        return res.status(200).json({
+            data:booking
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            message: "Something went wrong"
         })
     }
 })

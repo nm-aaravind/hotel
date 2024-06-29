@@ -37,7 +37,6 @@ export const validateToken = async () => {
 
 export const login = async (formData) => {
     try {
-        console.log("Entered", API_BASE_URL)
         const response = await axios.post(`${API_BASE_URL}/api/users/login`, formData, {
             headers: {
                 "Content-Type": "application/json"
@@ -263,6 +262,46 @@ export const loginUserWithGoogle = async () => {
             withCredentials: true
         })
     } catch (error) {
-        
+        throw error
+    }
+}
+
+export const paymentIntent = async (search) => {
+    try {
+        const params = new URLSearchParams();
+        params.append('hotelId', search.queryKey[1])
+        params.append('roomId', search.queryKey[2])
+        const response = await axios.post(`${API_BASE_URL}/api/hotels/booking/payment`, {
+            numberOfNights: search.queryKey[3]
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: params,
+            withCredentials: true
+        })
+        return response.data.data
+    } catch (error) {
+        throw error
+    }
+}
+
+export const bookHotel = async ({hotelId, roomId, paymentIntent, checkIn, checkOut, roomCount, data}) => {
+    try {
+        const params = new URLSearchParams();
+        params.append('hotelId', hotelId)
+        params.append('roomId', roomId)
+        const response = await axios.post(`${API_BASE_URL}/api/hotels/booking`, {
+            paymentIntent, checkIn, checkOut, roomCount, travellers: data
+        }, {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: params
+        })
+        return response.data;
+    } catch (error) {
+        throw error
     }
 }

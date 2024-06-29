@@ -93,7 +93,8 @@ const HotelDetails = () => {
                 hotel?.hotel.country}
             </p>
           </div>
-          <div className="image-slider flex gap-3 h-96 overflow-y-hidden aspect-square object-cover">
+          {
+            hotel?.hotel.imageURLS.length > 0 && <div className="image-slider flex gap-3 h-96 overflow-y-hidden aspect-square object-cover">
             {hotel?.hotel.imageURLS.map((image) => {
               return (
                 <img
@@ -103,6 +104,7 @@ const HotelDetails = () => {
               );
             })}
           </div>
+          }
           <span className="text-3xl mt-4">About the Property</span>
           {hotel?.hotel.description}
           {hotel?.hotel.facilities.length > 0 && (

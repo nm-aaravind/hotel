@@ -5,8 +5,10 @@ import Error from "../src/assets/alert.svg";
 import { toast } from "react-toastify";
 import * as apiClient from "../api/api.js";
 import { useQuery, useQueryClient } from "react-query";
+import {loadStripe} from "@stripe/stripe-js"
+const PUB_KEY = import.meta.env.VITE_PUB_KEY
 const AppContext = createContext(undefined);
-
+const stripe = loadStripe(PUB_KEY)
 export const AppContextProvider = ({ children }) => {
   const queryClient = useQueryClient();
 
@@ -65,6 +67,7 @@ export const AppContextProvider = ({ children }) => {
         },
         user,
         setUser,
+        stripe
       }}
     >
       {children}

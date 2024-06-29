@@ -2,7 +2,7 @@ import React from "react";
 import Searchbar from "./Searchbar";
 const Hero = () => {
   return (
-      <div className=" bg-landingBg flex flex-col items-center gap-4 text-white sm:w-full w-full bg-cover lg:p-32">
+      <div className="bg-landingBg flex flex-col items-center gap-4 text-white sm:w-full w-full bg-cover lg:p-32">
         <h1 className="text-center font-raleway sm:text-4xl lg:text-5xl">
           Wanderlust days and cozy nights
         </h1>

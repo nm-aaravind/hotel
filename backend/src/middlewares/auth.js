@@ -49,9 +49,7 @@ export async function hotelValidation(req, res, next) {
     next()
 }
 export async function verifyToken(req, res, next) {
-    console.log(req.cookies)
     const token = req.cookies['auth-token'];
-    console.log(token , "inside token")
     if (!token) {
         return res.status(401).json({
             message: "Unauthorized"
@@ -67,4 +65,25 @@ export async function verifyToken(req, res, next) {
             message: "Unauthorized"
         })
     }
+}
+
+export async function bookingValidation (req, res, next) {
+    console.log(req.body)
+    await checkSchema({
+        hotelId: { exists: { errorMessage: "HotelId is required", bail: true } },
+        roomId: { exists: { errorMessage: "RoomId is required", bail: true } },
+        paymentIntent: { exists: { errorMessage: "Payment Intent is required", bail: true } },
+        checkIn: { exists: { errorMessage: "Check in is required", bail: true }, isString: { errorMessage: "checkIn should be date string" } },
+        checkOut: { exists: { errorMessage: "Check out is required", bail: true }, isString: { errorMessage: "checkIn should be date string" } },
+        roomCount: { exists: { errorMessage: "Room count is required", bail: true }, isNumeric: { errorMessage: "roomCount should be number" , bail: true} },
+        travellers: { exists: { errorMessage: "Traveller list is required", bail: true } },
+    }, ['body', 'query', 'params']).run(req);
+    const error = validationResult(req)
+    console.log(error)
+    if (!(error.isEmpty())) {
+        return res.status(400).json({
+            message: error.array()
+        })
+    }
+    next()
 }
