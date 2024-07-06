@@ -62,7 +62,7 @@ const SearchPage = () => {
           <div
             className={`${
               !isSearchDropdownOpen && "hidden"
-            } flex flex-col gap-5 sm:text-md`}
+            } flex flex-col sm:text-md`}
           >
             <Searchbar border="blue" homePage={false} />
             <FacilitiesFilter

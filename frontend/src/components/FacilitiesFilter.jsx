@@ -17,7 +17,7 @@ const FacilitiesFilter = ({ facilities, setFacilities }) => {
     }
   };
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full mt-5">
       <p className="text-xl text-gray-900 font-light font-mukta border-b border-gray-300 pb-3">
         Facilities
       </p>

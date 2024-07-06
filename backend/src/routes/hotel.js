@@ -182,7 +182,7 @@ router.delete("/delete", verifyToken, async (req, res) => {
 
 router.post("/booking/payment", verifyToken, async (req, res) => {
     try {
-        const { numberOfNights } = req.body;
+        const { numberOfNights, roomCount } = req.body;
         const { roomId, hotelId } = req.query
 
         const room = await Room.findById(roomId);
@@ -192,7 +192,8 @@ router.post("/booking/payment", verifyToken, async (req, res) => {
             })
         }
 
-        const totalCost = room.price * numberOfNights * 100
+        const totalCost = room.price * numberOfNights * 100 * parseInt(roomCount)
+        console.log(room.price, numberOfNights, parseInt(roomCount))
         const paymentIntent = await stripe.paymentIntents.create({
             amount: totalCost,
             currency: "inr",

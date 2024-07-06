@@ -35,7 +35,7 @@ router.post('/register', signUpValidation, async (req, res) => {
         res.cookie("auth-token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            // sameSite: 'none',
+            sameSite: 'none',
             maxAge: 86400000
         })
         return res.status(200).json({
@@ -77,7 +77,7 @@ router.post('/login', loginValidation, async (req, res) => {
         res.cookie("auth-token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            // sameSite: "none",
+            sameSite: "none",
             maxAge: 86400000
         })
         return res.status(200).json({
@@ -99,11 +99,10 @@ router.get('/validateToken', verifyToken, async (req, res) => {
 })
 
 router.post('/logout', async (req, res) => {
-    console.log("Hitting")
     res.clearCookie('auth-token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        // sameSite: 'none',
+        sameSite: 'none',
     })
     console.log(res)
     return res.status(200).json({
@@ -158,8 +157,6 @@ router.patch("/update/password", verifyToken, async (req, res) => {
         const user = await User.findById(userId);
 
         const pwCheck = await bcrypt.compare(req.body.currentPassword, user.password);
-
-        console.log("Not matching")
         if (!pwCheck) {
             return res.status(400).json({
                 message: "Invalid credential"
@@ -197,7 +194,7 @@ router.get("/google/redirect",passport.authenticate("google",{
     res.cookie("auth-token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        // sameSite: 'none',
+        sameSite: 'none',
         maxAge: 86400000
     })
     return res.send("<script>window.close();</script>")

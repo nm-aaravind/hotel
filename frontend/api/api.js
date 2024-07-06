@@ -271,7 +271,8 @@ export const paymentIntent = async (search) => {
         params.append('hotelId', search.queryKey[1])
         params.append('roomId', search.queryKey[2])
         const response = await axios.post(`${API_BASE_URL}/api/hotels/booking/payment`, {
-            numberOfNights: search.queryKey[3]
+            numberOfNights: search.queryKey[3],
+            roomCount: search.queryKey[4]
         }, {
             headers: {
                 "Content-Type": "application/json"

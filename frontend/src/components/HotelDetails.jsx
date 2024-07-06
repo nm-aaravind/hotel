@@ -150,7 +150,7 @@ const HotelDetails = () => {
                         {(search.checkOut - search.checkIn) /
                           (1000 * 60 * 60 * 24)}{" "}
                         nights, {search.roomCount} rooms:{" "}
-                        <span className="font-bold text-lg italic">
+                        <span className="font-bold text-lg ">
                         &#8377;{
                             (room.price *
                               search.roomCount *
@@ -160,7 +160,7 @@ const HotelDetails = () => {
                       </span>
                       <span className="text-right font-light text-sm">
                         Per night:{" "}
-                        <span className="italic text-lg font-bold">
+                        <span className="text-lg font-bold">
                         &#8377;{room.price}
                         </span>
                       </span>

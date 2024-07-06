@@ -7,7 +7,6 @@ import * as apiClient from "../../api/api.js";
 import Loader from "./Loader.jsx";
 import {
   CardElement,
-  Elements,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
@@ -46,6 +45,7 @@ const BookingDetails = () => {
       state.hotel.hotel._id,
       state.room._id,
       numberOfNights,
+      search.roomCount
     ],
     onError: (error) => {
       showToast({ message: error.message, type: "ERROR" });
