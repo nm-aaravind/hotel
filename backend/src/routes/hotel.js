@@ -13,6 +13,7 @@ const router = express.Router();
 
 router.post('/add-hotel', verifyToken, upload.array('imageURLS', 5), hotelValidation, async (req, res) => {
     try {
+        console.log("Hey bro")
         const limit = pLimit(5)
         let uploadedURLS = null;
         const photos = req.files;

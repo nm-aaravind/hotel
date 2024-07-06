@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFormContext } from "react-hook-form";
-import Hotel from "../assets/hotel.svg";
 import ImageSlider from "./ImageSlider";
 
 function ImageUploader(props) {
@@ -33,25 +32,27 @@ function ImageUploader(props) {
   console.log(files)
 
   return (
-    <div className="flex flex-col gap-5 h-full text-gray-900 font-mukta text-center text-4xl my-6">
+    <div className="flex flex-col gap-5 h-full text-gray-900 font-mukta text-center sm:text-3xl lg:text-4xl my-6">
       Property Images
       <div className="py-4">
         {!files ? (
           <div
             {...getRootProps({
               className:
-                "p-3 text-white font-mukta text-2xl bg-moonstone hover:bg-moontone-hover w-fit rounded-md float-right cursor-pointer my-6",
+                "p-3 text-white font-mukta transition-colors sm:text-lg lg:text-2xl bg-moonstone hover:bg-moontone-hover w-fit rounded-md float-right cursor-pointer my-6",
             })}
           >
             Add property images
             <input {...getInputProps()} className="" id={name} {...props} />
           </div>
         ) : (
-          <button className="bg-red-500 text-white text-2xl float-right p-3 font-mukta rounded-md hover:bg-red-600 transition-colors">
+          <button onClick={() => {
+            setValue('imageURLS', undefined)
+          }} className="bg-red-500 mb-8 text-white sm:text-lg lg:text-2xl float-right p-3 font-mukta rounded-md hover:bg-red-600 transition-colors">
             Remove images
           </button>
         )}
-        <div className={`${files?.length > 0 && "h-60"}`}>
+        <div className={`${files?.length > 0}`}>
           {files?.length > 0 && <ImageSlider images={files} />}
         </div>
         {/* { !!files?.length && (

@@ -31,10 +31,10 @@ const Security = () => {
 
   const { isDirty, dirtyFields } = formState;
   return (
-    <div className=" flex col-start-2 flex-col col-end-2 row-start-1 row-end-4">
+    <div className=" flex px-2 col-start-2 flex-col col-end-2 row-start-1 row-end-4">
       <div className="flex flex-col border-b border-gray-300 w-full pb-7">
-        <h1 className="font-mukta text-4xl">Security</h1>
-        <p className="font-mukta text-gray-900 text-lg font-light">
+        <h1 className="font-mukta sm:text-3xl lg:text-4xl">Security</h1>
+        <p className="font-mukta text-gray-900 sm:text-md lg:text-lg font-light">
           Change your security settings, or delete your account
         </p>
       </div>
@@ -44,7 +44,7 @@ const Security = () => {
           onSubmit={methods.handleSubmit(formSubmit)}
           className="flex flex-col"
         >
-          <div className="p-5 border-b flex border-gray-300 font-mukta text-xl gap-8">
+          <div className="p-5 border-b flex border-gray-300 font-mukta sm:text-lg lg:text-xl gap-8">
             <span className="min-w-36 whitespace-nowrap">Change Password</span>
             {user.oAuth == "oauth" ? (
               <p className="texxt-lg font-light">You are signed in with Google</p>
@@ -82,10 +82,10 @@ const Security = () => {
       </FormProvider>
       <div className="p-5 border-b border-gray-300 font-mukta flex gap-8 items-center">
         <div>
-          <span className="block min-w-36 text-red-600 text-xl">
+          <span className="block min-w-36 text-red-600 sm:text-lg lg:text-xl">
             Delete Tourvista account
           </span>
-          <span className="min-w-36 text-gray-900 text-md font-light">
+          <span className="min-w-36 text-gray-900 sm:text-sm lg:text-md font-light">
             This will permanently delete your account, and cannot be retrieved
             back
           </span>

@@ -15,11 +15,11 @@ const ManageHotels = () => {
   });
   if(isFetching) return <Loader />
   return hotels?.data.length ? (
-    <div className="lg:w-3/4 mx-auto flex gap-8 flex-col pt-12 pb-20">
-      <div className="mb-3 font-mukta font-semibold tracking-tight text-gray-900 rounded-lg">
-        <Link to={'/add-hotel'} className="float-right p-3 text-center rounded-lg text-2xl bg-moonstone hover:bg-moontone-hover text-white transition-all font-light tracking-tight">List a property</Link>
-        <p className="text-5xl">Your Hotels</p>
-        <p className="text-xl font-light mt-3">Manage your properties</p>
+    <div className="lg:w-3/4 sm:px-4 sm:w-full mx-auto flex gap-8 flex-col pt-12 pb-20">
+      <div className="mb-3 w-full font-mukta font-semibold tracking-tight text-gray-950 rounded-lg">
+        <Link to={'/add-hotel'} className="float-right sm:p-2 lg:p-3 text-center rounded-lg sm:text-lg lg:text-2xl bg-moonstone hover:bg-moontone-hover text-white transition-all font-light tracking-tight">List a property</Link>
+        <p className="sm:text-3xl lg:text-5xl">Your Hotels</p>
+        <p className="sm:text-md lg:text-xl font-light mt-3">Manage your properties</p>
       </div>
       {
         hotels?.data.map((hotel) => {

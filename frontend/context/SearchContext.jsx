@@ -3,7 +3,7 @@ import React, { useContext, createContext, useState } from "react";
 const SearchContext = createContext(undefined);
 
 export const SearchContextProvider = ({ children }) => {
-  const [destination, setDestination] = useState("");
+  const [destination, setDestination] = useState(localStorage.getItem('destination') ? localStorage.getItem('destination') : "");
   const [checkIn, setCheckIn] = useState(new Date());
   let tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -24,6 +24,7 @@ export const SearchContextProvider = ({ children }) => {
     setCheckOut(checkOut);
     setGuestCount(guestCount);
     setRoomCount(roomCount);
+    localStorage.setItem('destination', destination)
   };
 
   const clearSearchContext = () => {

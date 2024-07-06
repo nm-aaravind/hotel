@@ -18,7 +18,7 @@ const Home = () => {
   const search = useSearchContext()
 
   return (
-    <div className="bg-cover min-h-screen ">
+    <div className="bg-cover">
       <div className="h-full flex flex-col">
         <Hero />
       </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSearchContext } from "../../context/SearchContext";
 import { useAppContext } from "../../context/AppContext";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import * as apiClient from "../../api/api.js";
 import Loader from "./Loader.jsx";
 import {
@@ -18,6 +18,7 @@ const BookingDetails = () => {
   const app = useAppContext();
   let travellersObj = {};
 
+  console.log(state)
   for (let i = 0; i < search.guestCount; i++) {
     travellersObj[i + 1] = {
       name: "",
@@ -51,12 +52,12 @@ const BookingDetails = () => {
     },
     enabled: !!state.hotel.hotel._id && numberOfNights > 0,
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { mutate: bookHotel, isLoading } = useMutation({
     mutationFn: apiClient.bookHotel,
     onSuccess: async (data) => {
-      app.showToast({message:"Booked your trip!", type:"SUCCESS"})
-      navigate("/mysettings/profile")
+      app.showToast({ message: "Booked your trip!", type: "SUCCESS" });
+      navigate("/mysettings/profile");
     },
     onError: (error) => {
       app.showToast({ message: error.message, type: "ERROR" });
@@ -70,17 +71,16 @@ const BookingDetails = () => {
   }
   const onSubmit = async (e) => {
     e.preventDefault();
-    const json = []
-    let person = {}
+    const json = [];
+    let person = {};
     const data = new FormData(e.target);
-    data.forEach(function(value, key){
-      person[key] = value
-      if(person.name && person.age && person.gender){
-        json.push(person)
-        person = {}
+    data.forEach(function (value, key) {
+      person[key] = value;
+      if (person.name && person.age && person.gender) {
+        json.push(person);
+        person = {};
       }
-  
-  });
+    });
     const { paymentIntent } = await stripe.confirmCardPayment(
       paymentData.client,
       {
@@ -114,48 +114,65 @@ const BookingDetails = () => {
             Review your booking
           </p>
         </div>
-        <div className="grid grid-cols-[0.5fr_1fr] font-mukta text-gray-900 gap-4">
-          <div className="border border-gray-300 row-start-1 row-end-3 rounded-lg p-5">
-            <span className="font-bold text-lg">Hotel</span>
-            <br></br>
-            {state.hotel.hotel.hotelName}
-            <hr className="m-2"></hr>
-            <div className="grid grid-cols-2 grid-rows-2 row-start-2 gap-3">
-              <p className="col-start-1 col-end-3 row-end-1">
-                <span className="font-bold text-lg">Your booking details</span>
-              </p>
-              <p className="col-start-1 col-end-1 border-r border-r-gray-300">
-                <span className="font-bold">Check In</span>
-                <br></br>
-                {search.checkIn.toDateString()}
-              </p>
-              <p className="col-start-2 col-end-3">
-                <span className="font-bold">Check Out</span>
-                <br></br>
-                {search.checkOut.toDateString()}
-              </p>
-              <p className="col-start-1 col-end-3 font-bold text-2xl">
-                <span>Price summary</span>
-                <span className="float-right">
-                  &#8377;
-                  {paymentData?.totalCost / 100}
-                </span>
-              </p>
-            </div>
+        <div className="lg:row-start-1 lg:col-start-2 lg:row-end-6 flex flex-col gap-4">
+          <div className="lg:col-start-2 lg:row-start-1 lg:row-end-1 p-4 border border-blue-950 bg-blue-700/20 rounded-lg">
+            <span className="font-bold">Signed In as </span>
+            <span className="font-light">
+              {app.user.name}
+              <br></br>
+              <span className="font-bold">Email Id </span> {app.user.email}
+            </span>
           </div>
-          <div className="row-start-1 row-end-6 flex flex-col gap-4">
-            <div className="col-start-2 row-start-1 row-end-1 p-4 border border-blue-950 bg-blue-700/20 rounded-lg">
-              <span className="font-bold">Signed In as </span>
-              <span className="font-light">
-                {app.user.name}
+          <div className="flex flex-col font-mukta text-gray-900 gap-4 lg:row-start-1">
+            <div className="border border-gray-300 lg:row-start-1 lg:row-end-3 rounded-lg p-5">
+              <span className="font-bold text-lg">Hotel</span>
+              <br></br>
+              {state.hotel.hotel.hotelName}
+              <hr className="m-2"></hr>
+              <div className="flex sm:justify-between">
+                <span className="font-bold text-lg">Room Type
                 <br></br>
-                <span className="font-bold">Email Id </span> {app.user.email}
-              </span>
+                <span className="font-normal">{state.room.roomName}</span>
+                </span>
+                <span className="font-bold text-lg">Rooms
+                <br></br>
+                <span className="font-normal">{search.roomCount}</span>
+                </span>
+                <span className="font-bold text-lg">Max guests
+                <br></br>
+                <span className="font-normal">{state.room.guestCount}</span>
+                </span>
+              </div>
+              <hr className="m-2"></hr>
+              <div className="grid grid-cols-2 grid-rows-2 row-start-2 gap-3">
+                <p className="col-start-1 col-end-3 row-end-1">
+                  <span className="font-bold text-lg">
+                    Your booking details
+                  </span>
+                </p>
+                <p className="col-start-1 col-end-1 border-r border-r-gray-300">
+                  <span className="font-bold">Check In</span>
+                  <br></br>
+                  {search.checkIn.toDateString()}
+                </p>
+                <p className="col-start-2 col-end-3">
+                  <span className="font-bold">Check Out</span>
+                  <br></br>
+                  {search.checkOut.toDateString()}
+                </p>
+                <p className="col-start-1 col-end-3 font-bold text-2xl">
+                  <span>Price summary</span>
+                  <span className="float-right">
+                    &#8377;
+                    {paymentData?.totalCost / 100}
+                  </span>
+                </p>
+              </div>
             </div>
             {
               <form
                 onSubmit={onSubmit}
-                className="col-start-2 w-full p-8 col-end-3 row-start-3 rounded-lg border border-gray-300 flex flex-col gap-3"
+                className="lg:col-start-2 w-full p-8 lg:col-end-3 lg:row-start-3 rounded-lg border border-gray-300 flex flex-col gap-5"
               >
                 <p className="font-bold text-2xl">Enter trip details</p>
                 <hr></hr>
@@ -163,34 +180,38 @@ const BookingDetails = () => {
                 <div className="w-full">
                   {Object.keys(travellers).map((traveller, index) => {
                     return (
-                      <div className="grid grid-cols-4 w-full">
-                        <span className="font-light">Guest {index + 1}</span>
+                      <div className="grid grid-cols-4 sm:grid-rows-[1fr_1fr] lg:grid-rows-1 w-full mb-4">
                         <div
-                          className={`border-b mb-4 w-full relative col-start-1 col-end-3 font-mukta text-md whitespace-nowrap flex items-center`}
+                          className={`flex-col border-b mb-4 sm:row-start-1 w-full relative col-start-1 lg:col-end-3 sm:col-end-5 font-mukta text-md whitespace-nowrap flex h-full`}
                         >
-                          <span className="min-w-24">Name</span>
-                          <input
-                            className="font-light focus-within:outline-none bg-inherit w-full"
-                            placeholder="Name"
-                            autoComplete="off"
-                            name="name"
-                            value={travellers[traveller].name}
-                            onChange={(e) => {
-                              setTravellers({
-                                ...travellers,
-                                [traveller]: {
-                                  name: e.target.value,
-                                  age: travellers[traveller].age,
-                                  gender: travellers[traveller].gender,
-                                },
-                              });
-                            }}
-                          />
+                          <span className="font-light self-start mb-4">
+                            Guest {index + 1}
+                          </span>
+                          <div className="flex">
+                            <span className="sm:min-w-16 lg:min-w-24 self-start">Name</span>
+                            <input
+                              className="font-light focus-within:outline-none bg-inherit w-full"
+                              placeholder="Name"
+                              autoComplete="off"
+                              name="name"
+                              value={travellers[traveller].name}
+                              onChange={(e) => {
+                                setTravellers({
+                                  ...travellers,
+                                  [traveller]: {
+                                    name: e.target.value,
+                                    age: travellers[traveller].age,
+                                    gender: travellers[traveller].gender,
+                                  },
+                                });
+                              }}
+                            />
+                          </div>
                         </div>
                         <div
-                          className={`p-5 border-b relative col-start-3 col-end-4 font-mukta text-md whitespace-nowrap flex items-center`}
+                          className={`border-b relative lg:col-start-3 lg:row-start-1 sm:col-start-1 sm:row-start-2 sm:col-end-3 col-end-4 font-mukta text-md whitespace-nowrap flex items-center`}
                         >
-                          <span className="min-w-24">Age</span>
+                          <span className="sm:min-w-16 lg:min-w-24">Age</span>
                           <input
                             type="number"
                             min={3}
@@ -212,9 +233,11 @@ const BookingDetails = () => {
                           />
                         </div>
                         <div
-                          className={`p-5 border-b relative col-start-4 col-end-5  font-mukta text-md whitespace-nowrap flex items-center`}
+                          className={`border-b relative lg:col-start-4 sm:col-start-3 lg:row-start-1 sm:row-start-2 col-end-5  font-mukta text-md whitespace-nowrap flex items-center`}
                         >
-                          <span className="min-w-24">Gender</span>
+                          <span className="sm:min-w-16 lg:min-w-24">
+                            Gender
+                          </span>
                           <select
                             name="gender"
                             onChange={(e) => {

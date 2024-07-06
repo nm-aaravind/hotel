@@ -25,6 +25,9 @@ export default {
         'moontone-hover': '#0687d6',
         'cloud' : '#f1f3ff'
       },
+      screens: {
+        'sm': '400px'
+      }
     },
   },
   plugins: [],

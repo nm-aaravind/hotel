@@ -3,12 +3,10 @@ import LeftArrow from "../assets/left-arrow.svg";
 import RightArrow from "../assets/right-arrow.svg";
 
 export default function ImageSlider({ images }) {
-  const [imageIndex, setImageImdex] = useState(0);  
-
   return (
-    <div className="flex gap-10 w-full h-full my-4">
+    <div className="lg:flex sm:grid sm:grid-cols-3 image-slider lg:overflow-x-scroll sm:grid-rows-auto gap-7 w-full  md:h-72 lg:h-72 my-4">
         {
-          images.map((image) => <img className="rounded-md overflow-hidden aspect-square h-full"
+          images?.map((image) => <img className="rounded-md object-cover aspect-square h-full"
           src={image.secure_url || URL.createObjectURL(image)}
         ></img>)
         }

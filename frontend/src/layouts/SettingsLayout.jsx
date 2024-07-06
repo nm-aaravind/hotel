@@ -3,11 +3,43 @@ import { Outlet, NavLink } from "react-router-dom";
 import User from "../assets/user-gray.svg";
 import Lock from "../assets/lock.svg";
 import ManyUsers from "../assets/many-users.svg";
-const SettingsLayout = () => {
+const   SettingsLayout = () => {
   return (
     <div className="w-full text-gray-900">
-      <div className="grid grid-cols-[300px_1fr] lg:w-3/4 mx-auto pt-16 gap-10">
-        <div className="col-start-1 col-end-1 border border-gray-300 rounded-lg flex flex-col">
+      <div className="lg:grid lg:grid-cols-[300px_1fr] sm:flex sm:flex-col lg:w-3/4 sm:px-4 mx-auto lg:pt-16 sm:pt-10 gap-10">
+      <div className="flex justify-between lg:hidden">
+          <NavLink
+          to={"/mysettings/profile"}
+          className={({ isActive }) =>
+            isActive
+              ? "transition-all hover:bg-gray-300 border-b-2 py-3 border-federal text-center font-mukta sm:text-lg lg:text-xl font-light w-full "
+              : "transition-all hover:bg-gray-300 py-3 text-center font-mukta sm:text-lg lg:text-xl font-light w-full "
+          }
+          >
+            Personal Details
+          </NavLink>
+          <NavLink
+          to={"/mysettings/other-travellers"}
+            className={({ isActive }) =>
+              isActive
+                ? "transition-all hover:bg-gray-300 border-b-2 py-3 border-federal text-center font-mukta sm:text-lg lg:text-xl font-light w-full "
+                : "transition-all hover:bg-gray-300 py-3 text-center font-mukta sm:text-lg lg:text-xl font-light w-full "
+            }
+          >
+            Master List
+          </NavLink>
+          <NavLink
+          to={"/mysettings/security"}
+            href="#info"
+            className={({ isActive }) =>
+              isActive
+                ? "transition-all hover:bg-gray-300 border-b-2 py-3 border-federal text-center font-mukta sm:text-lg lg:text-xl font-light w-full "
+                : "transition-all hover:bg-gray-300 py-3 text-center font-mukta sm:text-lg lg:text-xl font-light w-full "
+            }          >
+            Security
+          </NavLink>
+        </div>
+        <div className="sm:hidden lg:block col-start-1 col-end-1 border border-gray-300 rounded-lg flex flex-col">
           <NavLink
             to={"/mysettings/profile"}
             className={({ isActive }) =>

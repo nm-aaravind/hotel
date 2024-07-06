@@ -51,6 +51,8 @@ const hotelSchema = new mongoose.Schema({
         imageSchema
     ],
     rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Room', required:false }]
+},{
+    timestamps: true
 })
 
 const Hotel = mongoose.model("Hotel", hotelSchema);

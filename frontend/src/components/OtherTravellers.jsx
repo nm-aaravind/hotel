@@ -71,7 +71,7 @@ const OtherTravellers = () => {
   if (isFetching || isLoading || isDeleting) return <Loader />;
 
   return (
-    <div className=" flex col-start-2 flex-col col-end-2 row-start-1 row-end-4">
+    <div className=" flex col-start-2 flex-col col-end-2 row-start-1 row-end-4 px-2">
       <div className="border-b border-gray-300 w-full pb-7">
         <button
           onClick={() =>
@@ -81,12 +81,12 @@ const OtherTravellers = () => {
               gender: "",
             })
           }
-          className="float-right ml-auto mt-5 min-w-24 bg-moonstone hover:bg-moontone-hover transition-colors py-2 px-5 text-lg font-mukta text-white w-fit rounded disabled:bg-moonstone/40"
+          className="float-right ml-auto mt-5 lg:min-w-24 bg-moonstone hover:bg-moontone-hover transition-colors py-2 sm:px-3 lg:px-5 sm:text-md lg:text-lg font-mukta text-white w-fit rounded disabled:bg-moonstone/40"
         >
           Add new traveler
         </button>
-        <h1 className="font-mukta text-4xl">Master List</h1>
-        <p className="font-mukta text-gray-900 text-lg font-light">
+        <h1 className="font-mukta sm:text-3xl lg:text-4xl">Master List</h1>
+        <p className="font-mukta text-gray-900 sm:text-md lg:text-lg font-light">
           Add or edit info about the people you're travelling with
         </p>
       </div>
@@ -104,40 +104,41 @@ const OtherTravellers = () => {
             )}
             {travellers?.length > 0 &&
               travellers.map((traveller) => (
-                <div className="grid grid-cols-5">
+                <div className="grid grid-cols-5 sm:grid-rows-2 lg:grid-rows-1">
                   <div
-                    className={`p-4 border-b relative col-start-1 col-end-3 border-gray-300
+                    className={`p-3 relative col-start-1 sm:col-end-5 border-gray-300
                     } font-mukta text-lg whitespace-nowrap flex items-center`}
                   >
-                    <span className="min-w-24">Name</span>
+                    <span className="sm:min-w-20 lg:min-w-24">Name</span>
                     <p className="font-light">{traveller.name}</p>
                   </div>
                   <div
-                    className={`p-5 border-b relative col-start-3 col-end-4 border-gray-300
+                    className={`p-3 border-b relative sm:col-start-1 sm:row-start-2 col-end-4 border-gray-300
                     } font-mukta text-lg whitespace-nowrap flex items-center`}
                   >
-                    <span className="min-w-24">Age</span>
+                    <span className="sm:min-w-20 lg:min-w-24">Age</span>
                     <p className="font-light">{traveller.age}</p>
                   </div>
                   <div
-                    className={`p-5 border-b relative col-start-4 col-end-5 border-gray-300
+                    className={`p-3 border-b relative col-start-4 sm:col-end-6 border-gray-300
                     font-mukta text-lg whitespace-nowrap flex items-center`}
                   >
-                    <span className="min-w-24">Gender</span>
+                    <span className="sm:min-w-20 lg:min-w-24">Gender</span>
                     <p className="font-light">
                       {traveller.gender == "M" ? "Male" : "Female"}
                     </p>
                   </div>
-                  <button onClick={() => removeTravellers(traveller._id)} className="col-start-5 py-2 rounded-md self-center hover:bg-red-600 transition-colors ml-7 bg-red-500 text-lg font-mukta text-white disabled:bg-red-400">
+                  <button onClick={() => removeTravellers(traveller._id)} className="lg:col-start-5 row-start-1 sm:col-start-5 py-2 rounded-md self-center hover:bg-red-600 transition-colors ml-7 bg-red-500 sm:text-md lg:text-lg font-mukta text-white disabled:bg-red-400">
                     Remove
                   </button>
                 </div>
               ))}
+            <span className="sm:text-2xl">Add travelers</span>
             {fields.map((field, index) => {
               return (
-                <div className="grid grid-cols-5" key={field.id}>
+                <div className="grid grid-cols-5 grid-rows-2" key={field.id}>
                   <div
-                    className={`p-4 border-b relative col-start-1 col-end-3 ${
+                    className={`p-2 border-b relative col-start-1 col-end-5 ${
                       !(
                         errors?.travellers?.length > index &&
                         errors.travellers[index].name
@@ -146,7 +147,7 @@ const OtherTravellers = () => {
                         : "border-red-600"
                     } font-mukta text-lg whitespace-nowrap flex items-center`}
                   >
-                    <span className="min-w-24">Name</span>
+                    <span className="sm:min-w-20 lg:min-w-24">Name</span>
                     <input
                       className="font-light focus-within:outline-none bg-inherit w-full"
                       placeholder="Name"
@@ -166,7 +167,7 @@ const OtherTravellers = () => {
                       )}
                   </div>
                   <div
-                    className={`p-5 border-b relative col-start-3 col-end-4 ${
+                    className={`p-2 border-b relative col-start-1 col-end-4 ${
                       !(
                         errors?.travellers?.length > index &&
                         errors.travellers[index].age
@@ -175,7 +176,7 @@ const OtherTravellers = () => {
                         : "border-red-600"
                     } font-mukta text-lg whitespace-nowrap flex items-center`}
                   >
-                    <span className="min-w-24">Age</span>
+                    <span className="sm:min-w-20 lg:min-w-24">Age</span>
                     <input
                       type="number"
                       min={3}
@@ -197,7 +198,7 @@ const OtherTravellers = () => {
                       )}
                   </div>
                   <div
-                    className={`p-5 border-b relative col-start-4 col-end-5 ${
+                    className={`p-2 border-b relative col-start-4 col-end-6 ${
                       !(
                         errors?.travellers?.length > index &&
                         errors.travellers[index].gender
@@ -206,7 +207,7 @@ const OtherTravellers = () => {
                         : "border-red-600"
                     } font-mukta text-lg whitespace-nowrap flex items-center`}
                   >
-                    <span className="min-w-24">Gender</span>
+                    <span className="sm:min-w-20 lg:min-w-24">Gender</span>
                     {/* <input
                       className="font-light focus-within:outline-none bg-inherit w-full"
                       placeholder="Enter room name"
@@ -248,7 +249,7 @@ const OtherTravellers = () => {
                   {index >= 0 && (
                     <button
                       disabled={index == 0}
-                      className="col-start-5 py-2 rounded-md self-center hover:bg-red-600 transition-colors ml-7 bg-red-500 text-lg font-mukta text-white disabled:bg-red-400"
+                      className="col-start-5 py-2 rounded-md self-center row-start-1 hover:bg-red-600 transition-colors ml-7 bg-red-500 text-lg font-mukta text-white disabled:bg-red-400"
                       onClick={() => remove(index)}
                     >
                       Remove

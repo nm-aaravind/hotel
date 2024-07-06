@@ -6,6 +6,7 @@ import passport from 'passport';
 import "../utils/passport.js"
 import bcrypt from 'bcryptjs'
 import Traveller from '../models/travellers.js';
+import Booking from '../models/bookings.js';
 const router = express.Router();
 
 router.post('/register', signUpValidation, async (req, res) => {
@@ -34,7 +35,7 @@ router.post('/register', signUpValidation, async (req, res) => {
         res.cookie("auth-token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'none',
+            // sameSite: 'none',
             maxAge: 86400000
         })
         return res.status(200).json({
@@ -76,7 +77,7 @@ router.post('/login', loginValidation, async (req, res) => {
         res.cookie("auth-token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: "none",
+            // sameSite: "none",
             maxAge: 86400000
         })
         return res.status(200).json({
@@ -102,7 +103,7 @@ router.post('/logout', async (req, res) => {
     res.clearCookie('auth-token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        // sameSite: 'none',
     })
     console.log(res)
     return res.status(200).json({
@@ -196,7 +197,7 @@ router.get("/google/redirect",passport.authenticate("google",{
     res.cookie("auth-token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        // sameSite: 'none',
         maxAge: 86400000
     })
     return res.send("<script>window.close();</script>")
@@ -221,8 +222,8 @@ router.post("/add-travellers", verifyToken, async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.status(400).json({
-            message: "something went wrong"
+        return res.status(500).json({
+            message: "Something went wrong"
         })
     }
 })
@@ -241,7 +242,7 @@ router.get("/travellers", verifyToken, async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.status(400).json({
+        return res.status(500).json({
             message: "something went wrong"
         })
     }
@@ -259,10 +260,25 @@ router.delete("/travellers/delete", verifyToken, async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        return res.status(400).json({
+        return res.status(500).json({
             message:"Something went wrong"
         })
     }
 })
 
+
+router.get("/bookings", verifyToken, async (req, res) => {
+    try {
+        const bookings = await Booking.find({
+            user: req.user
+        }).populate(['roomId', 'hotelId', 'user'])
+        return res.status(200).json({
+            data: bookings
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:"Something went wrong"
+        })
+    }
+})
 export default router;

@@ -10,10 +10,10 @@ import Loader from "./Loader.jsx";
 const Settings = () => {
   return (
     <div className="w-full text-gray-950">
-      <div className="flex flex-col lg:w-3/4 mx-auto pt-16 gap-8">
+      <div className="flex flex-col sm:w-full sm:px-4 lg:w-3/4 mx-auto pt-12 gap-8">
         <div className="font-mukta">
-          <h1 className="font-bold  text-5xl mb-3">Account Settings</h1>
-          <p className="text-xl font-light text-gray-800">
+          <h1 className="font-bold sm:text-3xl lg:text-5xl lg:mb-3">Account Settings</h1>
+          <p className="md:text-lg lg:text-xl font-light text-gray-800">
             Manage your Tourvista experience
           </p>
         </div>
@@ -24,10 +24,10 @@ const Settings = () => {
           <div className="row-start-1 row-end-3 flex items-center justify-center">
             <img className="w-14 h-14" src={User}></img>
           </div>
-          <p className="col-start-2 col-end-2 text-2xl font-bold mt-3">
+          <p className="col-start-2 col-end-2 sm:text-xl lg:text-2xl font-bold mt-3">
             Personal Details
           </p>
-          <p className="col-start-2 text-lg mb-4">
+          <p className="col-start-2 sm:text-md lg:text-lg mb-4">
             Update your info and find how it's used
           </p>
         </Link>
@@ -38,10 +38,10 @@ const Settings = () => {
           <div className="row-start-1 row-end-3 flex items-center justify-center">
             <img className="w-14 h-14" src={ManyUsers}></img>
           </div>
-          <p className="col-start-2 col-end-2 text-2xl font-bold mt-3">
+          <p className="col-start-2 col-end-2 sm:text-xl lg:text-2xl font-bold mt-3">
             Master List
           </p>
-          <p className="col-start-2 text-lg mb-4">
+          <p className="col-start-2 sm:text-md lg:text-lg mb-4">
             Add or edit info about the people you're traveling with.
           </p>
         </Link>
@@ -52,10 +52,10 @@ const Settings = () => {
           <div className="row-start-1 row-end-3 flex items-center justify-center">
             <img className="w-14 h-14" src={Lock}></img>
           </div>
-          <p className="col-start-2 col-end-2 text-2xl font-bold mt-3">
+          <p className="col-start-2 col-end-2 sm:text-xl lg:text-2xl font-bold mt-3">
             Security
           </p>
-          <p className="col-start-2 text-lg mb-4">
+          <p className="col-start-2 sm:text-md lg:text-lg mb-4">
             Change your security settings, or delete your account
           </p>
         </Link>

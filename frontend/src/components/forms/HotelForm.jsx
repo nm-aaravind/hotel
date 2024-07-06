@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import ImageUploader from "../ImageUploader";
 import Facilities from "../Facilities";
-import Loader from "../Loader";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../../../api/api.js";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +17,14 @@ const HotelForm = ({ hotel, edit }) => {
     onError: (error) => {
       showToast({ message: error.message, type: "ERROR" });
     },
+  });
+  const [images, setImages] = useState(hotel?.hotel.imageURLS);
+  const defaultRooms = hotel?.hotel?.rooms?.map((room) => {
+    return {
+      roomName: room.roomName,
+      guestCount: room.guestCount,
+      price: room.price,
+    };
   });
 
   async function formSubmit(data) {
@@ -41,29 +48,29 @@ const HotelForm = ({ hotel, edit }) => {
 
     createHotel(formData);
   }
-
   const methods = useForm({
     mode: "onChange",
     defaultValues: {
-      name: hotel ? hotel.hotel.hotelName : "",
-      description: hotel ? hotel.hotel.description : "",
-      address: hotel ? hotel.hotel.address : "",
-      city: hotel ? hotel.hotel.city : "",
-      country: hotel ? hotel.hotel.country : "",
-      phoneNumber: hotel ? hotel.hotel.phoneNumber : "",
-      facilities: hotel ? hotel.hotel.facilities : [],
-      imageURLS: edit ? hotel.hotel.imageURLS :  [],
-      rooms: [
-        {
-          roomName: hotel ? hotel.rooms.roomName : "",
-          roomCount: hotel ? hotel.rooms.roomCount : "",
-          adultCount: hotel ? hotel.rooms.adultCount : "",
-          childCount: hotel ? hotel.rooms.childCount : "",
-        },
-      ],
+      name: hotel ? hotel?.hotel.hotelName : "",
+      description: hotel ? hotel?.hotel.description : "",
+      address: hotel ? hotel?.hotel.address : "",
+      city: hotel ? hotel?.hotel.city : "",
+      country: hotel ? hotel?.hotel.country : "",
+      phoneNumber: hotel ? hotel?.hotel.phoneNumber : "",
+      facilities: hotel ? hotel?.hotel.facilities : [],
+      imageURLS: [],
+      rooms: edit
+        ? defaultRooms
+        : [
+            {
+              roomName: "",
+              price: "",
+              guestCount: "",
+            },
+          ],
     },
   });
-  const { control, formState, reset } = methods;
+  const { control, formState, reset, setValue } = methods;
   useEffect(() => {
     reset(hotel);
   }, [hotel, reset]);
@@ -74,18 +81,18 @@ const HotelForm = ({ hotel, edit }) => {
     name: "rooms",
   });
 
-  if(edit && !hotel){
-    return <Loader />
-  }
+  // if (edit && !hotel) {
+  //   return <Loader />;
+  // }
 
   return (
     <div className="w-full mx-auto flex flex-col">
-      <div className="flex flex-col lg:w-3/4 mx-auto pt-16 gap-8">
+      <div className="flex flex-col lg:w-3/4 sm:px-4 sm:w-full mx-auto pt-16 gap-8">
         <div className="font-mukta">
-          <h1 className="font-bold  text-5xl mb-3">
+          <h1 className="font-bold sm:text-3xl lg:text-5xl lg:mb-3">
             {hotel ? "Edit your " : "List your "} Property
           </h1>
-          <p className="text-xl font-light text-gray-800">
+          <p className="sm:text-lg lg:text-xl font-light text-gray-800">
             Describe your property
           </p>
         </div>
@@ -97,9 +104,9 @@ const HotelForm = ({ hotel, edit }) => {
             <div
               className={`p-7 border-b relative ${
                 !errors.name ? " border-gray-300" : "border-red-600"
-              } font-mukta text-2xl whitespace-nowrap flex`}
+              } font-mukta sm:text-xl lg:text-2xl whitespace-nowrap flex`}
             >
-              <span className="min-w-64">Property Name</span>
+              <span className="sm:min-w-52 lg:min-w-64">Property Name</span>
               <input
                 className="font-light focus-within:outline-none bg-inherit w-full"
                 placeholder="Enter property name"
@@ -112,7 +119,7 @@ const HotelForm = ({ hotel, edit }) => {
                 })}
               />
               {errors.name && (
-                <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
+                <span className="text-red-600 font-mukta sm:text-lg lg:text-xl absolute bottom-0 translate-y-10">
                   This field is required
                 </span>
               )}
@@ -120,19 +127,20 @@ const HotelForm = ({ hotel, edit }) => {
             <div
               className={`p-7 border-b relative ${
                 !errors.description ? " border-gray-300" : "border-red-600"
-              } font-mukta text-2xl flex h-fit`}
+              } font-mukta sm:text-xl lg:text-2xl flex h-fit`}
             >
-              <span className="min-w-64">Property Description</span>
+              <span className="sm:min-w-52 lg:min-w-64">
+                Property Description
+              </span>
               <textarea
-                oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
                 rows={2}
-                className="font-light resize-none focus-within:outline-none bg-inherit w-full"
+                className="font-light focus-within:outline-none bg-inherit w-full"
                 placeholder="Enter property description"
                 autoComplete="off"
                 {...methods.register("description")}
               />
               {errors.description && (
-                <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
+                <span className="text-red-600 font-mukta sm:text-lg lg:text-xl absolute bottom-0 translate-y-10">
                   This field is required
                 </span>
               )}
@@ -140,9 +148,9 @@ const HotelForm = ({ hotel, edit }) => {
             <div
               className={`p-7 border-b relative ${
                 !errors.address ? " border-gray-300" : "border-red-600"
-              } font-mukta text-2xl whitespace-nowrap flex`}
+              } font-mukta sm:text-xl lg:text-2xl whitespace-nowrap flex`}
             >
-              <span className="min-w-64">Property Address</span>
+              <span className="sm:min-w-52 lg:min-w-64">Property Address</span>
               <input
                 className="font-light focus-within:outline-none bg-inherit w-full"
                 placeholder="Enter property address"
@@ -155,7 +163,7 @@ const HotelForm = ({ hotel, edit }) => {
                 })}
               />
               {errors.address && (
-                <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
+                <span className="text-red-600 font-mukta sm:text-lg lg:text-xl absolute bottom-0 translate-y-10">
                   This field is required
                 </span>
               )}
@@ -163,9 +171,9 @@ const HotelForm = ({ hotel, edit }) => {
             <div
               className={`p-7 border-b relative ${
                 !errors.city ? " border-gray-300" : "border-red-600"
-              } font-mukta text-2xl whitespace-nowrap flex`}
+              } font-mukta sm:text-xl lg:text-2xl whitespace-nowrap flex`}
             >
-              <span className="min-w-64">City</span>
+              <span className="sm:min-w-52 lg:min-w-64">City</span>
               <input
                 className="font-light focus-within:outline-none bg-inherit w-full"
                 placeholder="Enter city"
@@ -178,7 +186,7 @@ const HotelForm = ({ hotel, edit }) => {
                 })}
               />
               {errors.city && (
-                <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
+                <span className="text-red-600 font-mukta sm:text-lg lg:text-xl absolute bottom-0 translate-y-10">
                   This field is required
                 </span>
               )}
@@ -186,9 +194,9 @@ const HotelForm = ({ hotel, edit }) => {
             <div
               className={`p-7 border-b relative ${
                 !errors.country ? " border-gray-300" : "border-red-600"
-              } font-mukta text-2xl whitespace-nowrap flex`}
+              } font-mukta sm:text-xl lg:text-2xl whitespace-nowrap flex`}
             >
-              <span className="min-w-64">Country</span>
+              <span className="sm:min-w-52  lg:min-w-64">Country</span>
               <input
                 className="font-light focus-within:outline-none bg-inherit w-full"
                 placeholder="Enter country"
@@ -201,7 +209,7 @@ const HotelForm = ({ hotel, edit }) => {
                 })}
               />
               {errors.country && (
-                <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
+                <span className="text-red-600 font-mukta sm:text-lg lg:text-xl absolute bottom-0 translate-y-10">
                   This field is required
                 </span>
               )}
@@ -209,9 +217,9 @@ const HotelForm = ({ hotel, edit }) => {
             <div
               className={`p-7 border-b relative ${
                 !errors.phoneNumber ? " border-gray-300" : "border-red-600"
-              } font-mukta text-2xl whitespace-nowrap flex`}
+              } font-mukta sm:text-xl lg:text-2xl whitespace-nowrap flex`}
             >
-              <span className="min-w-64">Contact Number</span>
+              <span className="sm:min-w-52 lg:min-w-64">Contact Number</span>
               <input
                 className="font-light focus-within:outline-none bg-inherit w-full"
                 placeholder="Enter contact number"
@@ -232,7 +240,7 @@ const HotelForm = ({ hotel, edit }) => {
                 })}
               />
               {errors.phoneNumber && (
-                <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
+                <span className="text-red-600 font-mukta sm:text-lg lg:text-xl absolute bottom-0 translate-y-10">
                   {errors.phoneNumber.message}
                 </span>
               )}
@@ -244,23 +252,23 @@ const HotelForm = ({ hotel, edit }) => {
               <Facilities />
             </div>
             <div className="flex flex-col my-5 gap-20">
-              <div className="font-mukta text-4xl -mb-6 text-center tracking-tight text-gray-900 rounded-lg">
+              <div className="font-mukta sm:text-3xl lg:text-4xl -mb-6 text-center tracking-tight text-gray-900 rounded-lg">
                 Room Details
               </div>
               {fields.map((field, index) => {
                 return (
                   <div className="grid grid-cols-6 gap-5" key={field.id}>
                     <div
-                      className={`p-7 border-b relative col-start-1 col-end-6 ${
+                      className={`p-7 border-b relative col-start-1 col-end-7 ${
                         !(
                           errors?.rooms?.length > index &&
                           errors?.rooms[index]?.roomName
                         )
                           ? " border-gray-300"
                           : "border-red-600"
-                      } font-mukta text-2xl whitespace-nowrap flex`}
+                      } font-mukta sm:text-lg lg:text-2xl whitespace-nowrap flex`}
                     >
-                      <span className="min-w-64">Room Name</span>
+                      <span className="sm:min-w-36 lg:min-w-64">Room Name</span>
                       <input
                         className="font-light focus-within:outline-none bg-inherit w-full"
                         placeholder="Enter room name"
@@ -274,7 +282,7 @@ const HotelForm = ({ hotel, edit }) => {
                       />
                       {errors?.rooms?.length > index &&
                         errors.rooms[index]?.roomName && (
-                          <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
+                          <span className="text-red-600 font-mukta sm:text-lg lg:text-xl absolute bottom-0 translate-y-10">
                             This field is required
                           </span>
                         )}
@@ -283,55 +291,57 @@ const HotelForm = ({ hotel, edit }) => {
                     {index >= 0 && (
                       <button
                         disabled={index == 0}
-                        className="col-start-6 py-3 rounded-md self-center hover:bg-red-600 transition-colors ml-7 bg-red-500 text-2xl font-mukta text-white disabled:bg-red-400"
+                        className="col-start-4 col-end-7 row-start-4 py-3 mt-4 rounded-md self-center hover:bg-red-600 transition-colors ml-7 bg-red-500 sm:text-lg lg:text-2xl font-mukta text-white disabled:bg-red-400"
                         onClick={() => remove(index)}
                       >
                         Remove room
                       </button>
                     )}
 
+                        <div
+                          className={`p-7 border-b relative row-start-2 col-start-1 col-end-7 ${
+                            !(
+                              errors?.rooms?.length > index &&
+                              errors?.rooms[index]?.guestCount
+                            )
+                              ? " border-gray-300"
+                              : "border-red-600"
+                          } font-mukta sm:text-lg lg:text-2xl whitespace-nowrap flex`}
+                        >
+                          <span className="sm:min-w-36 lg:min-w-64">Guests</span>
+                          <input
+                            type="number"
+                            min={1}
+                            className="font-light focus-within:outline-none bg-inherit w-full"
+                            placeholder="Guests per room"
+                            autoComplete="off"
+                            {...methods.register(`rooms.${index}.guestCount`, {
+                              required: {
+                                value: true,
+                                message: "This field is required",
+                              },
+                            })}
+                          />
+                          {errors?.rooms?.length > index &&
+                            errors?.rooms[index]?.guestCount && (
+                              <span className="text-red-600 font-mukta sm:text-lg lg:text-xl absolute bottom-0 translate-y-10">
+                                This field is required
+                              </span>
+                            )}
+                        </div>
                     <div
-                      className={`p-7 border-b relative col-start-1 col-end-4 ${
-                        !(
-                          errors?.rooms?.length > index &&
-                          errors?.rooms[index]?.roomCount
-                        )
-                          ? " border-gray-300"
-                          : "border-red-600"
-                      } font-mukta text-2xl whitespace-nowrap flex`}
-                    >
-                      <span className="min-w-64">Number of rooms</span>
-                      <input
-                        type="number"
-                        className="font-light focus-within:outline-none bg-inherit w-full"
-                        placeholder="Total number of rooms"
-                        autoComplete="off"
-                        {...methods.register(`rooms.${index}.roomCount`, {
-                          required: {
-                            value: true,
-                            message: "This field is required",
-                          },
-                        })}
-                      />
-                      {errors?.rooms?.length > index &&
-                        errors?.rooms[index]?.roomCount && (
-                          <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
-                            This field is required
-                          </span>
-                        )}
-                    </div>
-
-                    <div
-                      className={`p-7 border-b relative col-start-4 col-end-7 ${
+                      className={`p-7 border-b relative col-start-1 col-end-7 ${
                         !(
                           errors?.rooms?.length > index &&
                           errors?.rooms[index]?.price
                         )
                           ? " border-gray-300"
                           : "border-red-600"
-                      } font-mukta text-2xl whitespace-nowrap flex`}
+                      } font-mukta sm:text-lg lg:text-2xl whitespace-nowrap flex`}
                     >
-                      <span className="min-w-64">Price per night</span>
+                      <span className="sm:min-w-36 lg:min-w-64">
+                        Price per night
+                      </span>
                       <input
                         type="number"
                         min={0}
@@ -347,96 +357,32 @@ const HotelForm = ({ hotel, edit }) => {
                       />
                       {errors?.rooms?.length > index &&
                         errors?.rooms[index]?.price && (
-                          <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
+                          <span className="text-red-600 font-mukta sm:text-lg lg:text-xl absolute bottom-0 translate-y-10">
                             This field is required
                           </span>
                         )}
                     </div>
 
-                    <div
-                      className={`p-7 border-b relative col-start-1 col-end-4 ${
-                        !(
-                          errors?.rooms?.length > index &&
-                          errors?.rooms[index]?.adultCount
-                        )
-                          ? " border-gray-300"
-                          : "border-red-600"
-                      } font-mukta text-2xl whitespace-nowrap flex`}
+                    <button
+                      type="button"
+                      className="col-start-1 col-end-4 bg-federal/80 hover:bg-federal/90 font-mukta sm:text-lg lg:text-2xl p-3 mt-4 border text-white rounded-md transition-colors"
+                      onClick={() =>
+                        append({
+                          roomName: "",
+                          roomCount: "",
+                          guestCount: "",
+                        })
+                      }
                     >
-                      <span className="min-w-64">Adults</span>
-                      <input
-                        type="number"
-                        min={1}
-                        className="font-light focus-within:outline-none bg-inherit w-full"
-                        placeholder="Adults per room"
-                        autoComplete="off"
-                        {...methods.register(`rooms.${index}.adultCount`, {
-                          required: {
-                            value: true,
-                            message: "This field is required",
-                          },
-                        })}
-                      />
-                      {errors?.rooms?.length > index &&
-                        errors?.rooms[index]?.adultCount && (
-                          <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
-                            This field is required
-                          </span>
-                        )}
-                    </div>
-
-                    <div
-                      className={`p-7 border-b relative col-start-4 col-end-7 ${
-                        !(
-                          errors?.rooms?.length > index &&
-                          errors?.rooms[index]?.childCount
-                        )
-                          ? " border-gray-300"
-                          : "border-red-600"
-                      } font-mukta text-2xl whitespace-nowrap flex`}
-                    >
-                      <span className="min-w-64">Children</span>
-                      <input
-                        type="number"
-                        min={0}
-                        className="font-light focus-within:outline-none bg-inherit w-full"
-                        placeholder="Adults per room"
-                        autoComplete="off"
-                        {...methods.register(`rooms.${index}.childCount`, {
-                          required: {
-                            value: true,
-                            message: "This field is required",
-                          },
-                        })}
-                      />
-                      {errors?.rooms?.length > index &&
-                        errors?.rooms[index]?.childCount && (
-                          <span className="text-red-600 font-mukta text-xl absolute bottom-0 translate-y-10">
-                            This field is required
-                          </span>
-                        )}
-                    </div>
+                      Add room
+                    </button>
                   </div>
                 );
               })}
-              <button
-                type="button"
-                className="col-start-1 col-end-4 bg-federal/80 hover:bg-federal/90 font-mukta text-2xl p-3 mt-2 border text-white rounded-md transition-colors"
-                onClick={() =>
-                  append({
-                    roomName: "",
-                    roomCount: "",
-                    adultCount: "",
-                    childCount: "",
-                  })
-                }
-              >
-                Add room
-              </button>
             </div>
             <button
               type="submit"
-              className="hover:bg-moontone-hover font-mukta text-2xl p-3 bg-moonstone text-white rounded-md transition-colors mb-8"
+              className="hover:bg-moontone-hover font-mukta text-2xl p-3 mt-4 bg-moonstone text-white rounded-md transition-colors mb-8"
             >
               {hotel ? "Edit" : "List"}
             </button>

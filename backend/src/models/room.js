@@ -10,15 +10,7 @@ const roomSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    adultCount: {
-        type: Number,
-        required: true
-    },
-    childCount : {
-        type: Number,
-        required: true
-    },
-    roomCount: {
+    guestCount: {
         type: Number,
         required: true
     },

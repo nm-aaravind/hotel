@@ -55,10 +55,10 @@ const UserProfile = () => {
     return <Loader />;
   }
   return (
-    <div className=" border-black flex col-start-2 flex-col col-end-2 row-start-1 row-end-4">
+    <div className=" border-black flex col-start-2 flex-col col-end-2 row-start-1 row-end-4 px-2">
       <div className="flex flex-col border-b border-gray-300 w-full pb-7">
-        <h1 className="font-mukta text-4xl">Personal Details</h1>
-        <p className="font-mukta text-gray-900 text-lg font-light">
+        <h1 className="font-mukta sm:text-3xl lg:text-4xl">Personal Details</h1>
+        <p className="font-mukta text-gray-900 sm:text-md lg:text-lg font-light">
           Update your info and find how it's used
         </p>
         <p className="font-mukta underline underline-offset-2 text-gray-900 text-md italic font-light">
@@ -70,7 +70,7 @@ const UserProfile = () => {
           onSubmit={methods.handleSubmit(formSubmit)}
           className="flex flex-col"
         >
-          <div className="p-5 border-b border-gray-300 font-mukta text-xl flex gap-8">
+          <div className="p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex gap-8">
             <span className="min-w-36">Name</span>
             <input
               className="font-light focus-within:outline-none bg-inherit"
@@ -78,7 +78,7 @@ const UserProfile = () => {
               {...methods.register("name")}
             />
           </div>
-          <div className="p-5 border-b border-gray-300 font-mukta text-xl flex gap-8 items-center">
+          <div className="p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex gap-8 items-center">
             <span className="min-w-36">Email Id</span>
             <input
               className="font-light focus-within:outline-none bg-inherit"
@@ -87,12 +87,12 @@ const UserProfile = () => {
               {...methods.register("email")}
             />
             {user?.oAuth === "oauth" && (
-              <p className="p-2 bg-green-600 text-white rounded text-md font-mukta font-extralight">
+              <p className="p-1 bg-green-600 text-white rounded sm:text-sm md:text-md lg:text-md font-mukta font-light">
                 Signed in with Google
               </p>
             )}
           </div>
-          <div className="p-5 border-b border-gray-300 font-mukta text-xl flex gap-8">
+          <div className="p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex gap-8">
             <span className="min-w-36">Address</span>
             <input
               className="font-light focus-within:outline-none bg-inherit"
@@ -100,7 +100,7 @@ const UserProfile = () => {
               {...methods.register("address")}
             />
           </div>
-          <div className="p-5 border-b border-gray-300 font-mukta text-xl flex gap-8">
+          <div className="p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex gap-8">
             <span className="min-w-36">Phone Number</span>
             <input
               className="font-light focus-within:outline-none bg-inherit"

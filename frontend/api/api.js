@@ -103,7 +103,6 @@ export const logout = async () => {
 
 export const addHotel = async (formData) => {
     try {
-        console.log('sdfsfsfsdf')
         const response = await axios.post(`${API_BASE_URL}/api/hotels/add-hotel`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
@@ -301,6 +300,20 @@ export const bookHotel = async ({hotelId, roomId, paymentIntent, checkIn, checkO
             params: params
         })
         return response.data;
+    } catch (error) {
+        throw error
+    }
+}
+
+export const getBookingsByUser = async () => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/api/users/bookings`,{
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+        return response.data.data
     } catch (error) {
         throw error
     }

@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Calendar from "../assets/calendar.svg";
 import Person from "../assets/person.svg";
 import Up from "../assets/up-arrow.svg";
+import Location from "../assets/location.svg";
 import Down from "../assets/down-arrow.svg";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -29,10 +30,7 @@ const Searchbar = ({ border, homePage, detailsPage }) => {
   });
   var nextDay = new Date();
   nextDay.setDate(new Date().getDate() + 1);
-  const [dateRange, setDateRange] = useState([
-    search.checkIn,
-    search.checkOut,
-  ]);
+  const [dateRange, setDateRange] = useState([search.checkIn, search.checkOut]);
   const [startDate, endDate] = dateRange;
   const placeHolder = `${startDate ? startDate : "Select checkin date"} - ${
     endDate ? endDate : "Select checkout date"
@@ -49,30 +47,31 @@ const Searchbar = ({ border, homePage, detailsPage }) => {
       counts.guests,
       counts.room
     );
-    if(!detailsPage)
-      navigate("/search");
+    if (!detailsPage) navigate("/search");
   }
   return (
     <div
       className={`border-${
         border == "blue" ? "federal" : "white"
-      }/85 border rounded-lg h-[4.4rem] p-2 w-full text-black`}
+      }/85 border border-gray-300 rounded-lg p-2 w-full text-black`}
     >
       <form
-        className="flex h-full gap-2 rounded-lg w-ful"
+        className="flex relative lg:flex-row sm:flex-col h-full gap-2 rounded-lg w-full"
         onSubmit={formSubmit}
       >
         {!detailsPage && (
           <div
             className={`border-${
               border == "blue" ? "federal" : "white"
-            }/85 border bg-white rounded-sm flex gap-2 items-center text-md font-mukta pl-2 relative flex-auto`}
+            }/85 h-12 bg-white top-10 rounded-sm flex gap-2 items-center text-md font-mukta pl-2 flex-auto`}
           >
+            <img src={Location} className="h-6 px-2 mb-1 opacity-70" />
+
             <input
               required
               autoComplete="off"
               type="text"
-              className={`rounded-sm indent-3 w-full pt-1 text-md font-mukta focus-within:outline-none`}
+              className={`rounded-sm w-full pt-1 text-md font-mukta focus-within:outline-none`}
               placeholder="Where are you going?"
               value={destination}
               onChange={(event) => setDestination(event.target.value)}
@@ -95,9 +94,9 @@ const Searchbar = ({ border, homePage, detailsPage }) => {
         <div
           className={`border-${
             border == "blue" ? "federal" : "white"
-          }/85 pt-1 border h-full bg-white rounded-sm flex items-center relative px-2 flex-auto`}
+          }/85 pt-1 h-12 border bg-white rounded-sm flex items-center relative px-2 flex-auto`}
         >
-          <img src={Calendar} className="h-7 px-2 mb-1 opacity-80" />
+          <img src={Calendar} className="h-6 px-2 mb-1 opacity-80" />
           <DatePicker
             required
             wrapperClassName="bg-white w-full"
@@ -117,7 +116,7 @@ const Searchbar = ({ border, homePage, detailsPage }) => {
         <div
           className={`border-${
             border == "blue" ? "federal" : "white"
-          }/85 border rounded-sm bg-white flex gap-2 items-center text-md font-mukta pr-4 pl-2 relative w-fit flex-auto max-w-fit`}
+          }/85 border h-12 sm:w-full rounded-sm bg-white flex gap-2 items-center text-md font-mukta pr-4 pl-2 relative flex-auto cursor-pointer lg:max-w-fit`}
           onClick={() =>
             setModalState((prev) => {
               return {
@@ -127,12 +126,12 @@ const Searchbar = ({ border, homePage, detailsPage }) => {
             })
           }
         >
-          <img src={Person} className="h-7 w-8" />
+          <img src={Person} className="h-6 w-8 pl-1" />
           <p className="pt-1">
             {counts.guests == 1
               ? counts.guests + " adult "
               : counts.guests + " adults "}{" "}
-              {"   -   "}
+            {"   -   "}
             {counts.room == 1
               ? counts.room + " room "
               : counts.room + " rooms "}
@@ -141,7 +140,7 @@ const Searchbar = ({ border, homePage, detailsPage }) => {
             onClick={(e) => e.stopPropagation()}
             className={`border-${
               border == "blue" ? "federal" : "white"
-            }/85 text-gray-900 border grid row-span-3 col-span-2 absolute top-[4rem] bg-white rounded-xl w-full left-0 z-10 ${
+            }/85 text-gray-900 border grid row-span-3 col-span-2 absolute top-[4rem] bg-white rounded-xl lg:w-full sm:w-1/3 sm:left-1/2 sm:-translate-x-1/2 left-0 z-10 ${
               !modalState.personModal && `hidden`
             } justify-center gap-x-8 gap-y-4 py-6`}
           >
@@ -186,7 +185,7 @@ const Searchbar = ({ border, homePage, detailsPage }) => {
                 }}
               />
             </div>
-            
+
             <p className="flex items-center row-start-2 col-start-1">Rooms </p>
             <div className="flex border items-center border-gray-300 rounded-lg row-start-2 col-start-2">
               <img
@@ -237,7 +236,7 @@ const Searchbar = ({ border, homePage, detailsPage }) => {
                   };
                 });
               }}
-              className="bg-moonstone hover:bg-moontone-hover transition-all rounded-sm font-mukta text-white h-10 col-start-1 col-end-3"
+              className="bg-moonstone hover:bg-moontone-hover transition-all rounded-sm font-mukta text-white md:h-10 sm:h-12 col-start-1 col-end-3"
             >
               Done
             </button>
@@ -245,9 +244,9 @@ const Searchbar = ({ border, homePage, detailsPage }) => {
         </div>
         <button
           type="submit"
-          className="bg-moonstone font-mukta text-md text-white hover:bg-moontone-hover rounded-sm px-10 transition-colors"
+          className="bg-moonstone font-mukta text-md text-white hover:bg-moontone-hover rounded-sm px-10 transition-colors h-12"
         >
-          { detailsPage ? "Edit search" : "Search"}
+          {detailsPage ? "Edit search" : "Search"}
         </button>
       </form>
     </div>
