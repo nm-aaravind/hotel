@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce.jsx";
 import { useSearchContext } from "../../context/SearchContext.jsx";
+import Typeahead from "./Typeahead.jsx";
 
 const Searchbar = ({ border, homePage, detailsPage }) => {
   const [modalState, setModalState] = useState({
@@ -63,19 +64,10 @@ const Searchbar = ({ border, homePage, detailsPage }) => {
           <div
             className={`border-${
               border == "blue" ? "federal" : "white"
-            }/85 h-12 bg-white top-10 rounded-sm flex gap-2 items-center text-md font-mukta pl-2 flex-auto`}
+            }/85 h-12 bg-white relative rounded-sm flex gap-2 items-center text-md font-mukta pl-2 flex-auto`}
           >
-            <img src={Location} className="h-6 px-2 mb-1 opacity-70" />
-
-            <input
-              required
-              autoComplete="off"
-              type="text"
-              className={`rounded-sm w-full pt-1 text-md font-mukta focus-within:outline-none`}
-              placeholder="Where are you going?"
-              value={destination}
-              onChange={(event) => setDestination(event.target.value)}
-            />
+            <img src={Location} className="h-5 px-1 mb-1 opacity-70" />
+            <Typeahead destination = {destination} setDestination={setDestination}/>
             <div
             // onClick={(e) => e.stopPropagation()}
             // className={`absolute top-[5.8rem] bg-white rounded-md w-full left-0 overflow-hidden ${

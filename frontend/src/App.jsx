@@ -55,6 +55,7 @@ import OtherTravellers from "./components/OtherTravellers.jsx";
 import SettingsLayout from "./layouts/SettingsLayout.jsx";
 import { Elements } from "@stripe/react-stripe-js";
 import MyBookings from "./components/MyBookings.jsx";
+import Typeahead from "./components/Typeahead.jsx";
 const node_ver = import.meta.env.NODE_VERSION;
 function App() {
   const { isLoggedIn, stripe } = useAppContext();
@@ -79,6 +80,7 @@ function App() {
                 }
               />
               
+              <Route path="my-tripss" element={<Typeahead />} />
               <Route path="my-trips" element={<MyBookings />} />
               <Route path="mysettings" element={<SettingsLayout />}>
                 <Route path="profile" element={<UserProfile />} />

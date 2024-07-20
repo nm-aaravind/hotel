@@ -74,7 +74,7 @@ const HotelDetails = () => {
             {app.isLoggedIn.value ? (
               <a
                 href="#info"
-                className="float-right bg-moonstone transition-all hover:bg-moontone-hover sm:p-2 lg:p-3 font-mukta sm:text-lg lg:text-xl rounded-md text-white font-light"
+                className="float-right bg-moonstone transition-all hover:bg-moontone-hover sm:p-2 lg:p-3 font-mukta sm:text-lg lg:text-xl rounded-md text-white font-light ml-8"
               >
                 Reserve
               </a>

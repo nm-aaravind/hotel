@@ -33,7 +33,7 @@ const Header = ({ toggleModalVisible }) => {
             </Link>
           </li>
           {isLoggedIn.fetching ? null : !isLoggedIn.value ? (
-            <li className="flex gap-10 -mr-7 sm:hidden md:inline-flex pt-1">
+            <li className="flex gap-10 -mr-7 sm:hidden md:inline-flex py-[0.35rem]">
               <Link
                 onClick={() => toggleModalVisible("signin")}
                 className="p-1 relative text-lg font-raleway text-white underline-animation"
@@ -111,7 +111,7 @@ const Header = ({ toggleModalVisible }) => {
           )}
         </ul>
         <ul className="md:hidden w-full flex flex-col relative justify-between items-center gap-5">
-          <li className="flex justify-between w-full">
+          <ul className="flex justify-between w-full">
             <Link
               to="/"
               className="sm:text-2xl md:text-3xl tracking-normal font-title"
@@ -142,7 +142,7 @@ const Header = ({ toggleModalVisible }) => {
                     </Link>
                     <Link
                       onClick={() => {
-                        toggleModalVisible("signup")
+                        toggleModalVisible("sign")
                         setIsDropdownOpen(false);
                       }}
                       className="py-3 text-lg font-raleway text-white hover:bg-blue-700 transition-colors"
@@ -191,7 +191,7 @@ const Header = ({ toggleModalVisible }) => {
                   </li>
                 ))}
             </div>
-          </li>
+          </ul>
         </ul>
       </nav>
     </div>

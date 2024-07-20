@@ -86,7 +86,7 @@ const MyBookings = () => {
                       ))}</div>
                     </p>
                     <span className="absolute bottom-2 w-full">
-                      {new Date(booking?.checkIn) < new Date() ? (
+                      {new Date(booking?.checkIn) > new Date() ? (
                         <div className="w-full flex justify-between">
                           <span className="p-2 text-center font-mukta rounded bg-green-600 text-white">
                             Upcoming

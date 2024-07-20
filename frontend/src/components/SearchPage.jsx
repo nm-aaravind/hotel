@@ -53,9 +53,9 @@ const SearchPage = () => {
           onMouseEnter={() => setIsSearchDropdownOpen(true)}
           className="font-mukta flex flex-col gap-4 justify-between"
         >
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <span className="text-3xl">Search Results </span>
-            <span className="italic text-md text-gray-800 underline underline-offset-2">
+            <span className="italic  text-md text-gray-800 underline underline-offset-2">
               Edit Search / Apply Filters
             </span>
           </div>
@@ -85,7 +85,7 @@ const SearchPage = () => {
           >
             Clear
           </button>
-          <p className="float-left font-mukta text-gray-900 text-2xl">
+          <p className="float-left font-mukta text-gray-900 mb-2 text-2xl">
             Filters
           </p>
         </div>

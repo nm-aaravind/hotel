@@ -26,7 +26,7 @@ export default {
         'cloud' : '#f1f3ff'
       },
       screens: {
-        'sm': '400px'
+        'sm': '320px'
       }
     },
   },
