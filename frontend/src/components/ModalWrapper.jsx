@@ -12,7 +12,7 @@ const ModalWrapper = ({ children, modalVisible , toggleModalVisible }) => {
       }}
       className="fixed z-10 top-0 bottom-0 right-0 backdrop-blur-md left-0 grid place-items-center"
     >
-      <div
+      <div  
         className="bg-white rounded-lg overflow-hidden sm:w-[min(90%,450px)] md:w-[max(500px,28%)] shadow-modal"
         onClick={(e) => e.stopPropagation()}
       >

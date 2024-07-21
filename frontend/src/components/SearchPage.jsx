@@ -46,16 +46,16 @@ const SearchPage = () => {
   if (isFetching) return <Loader />;
 
   return (
-    <div className="md:m-10 sm:m-6 grid sm:grid-cols-1 lg:grid-cols-[250px_1fr] gap-x-12 lg:gap-y-14 sm:gap-y-8 lg:grid-rows-[50px_1fr]">
+    <div className="md:m-10 sm:m-6 grid sm:grid-cols-1 lg:grid-cols-[250px_1fr] gap-x-12 lg:gap-y-14 sm:gap-y-3 lg:grid-rows-[50px_1fr]">
       <div className="lg:hidden col-start-1 row-start-1 md:col-end-5 cursor-pointer flex flex-col">
         <span
           onMouseLeave={() => setIsSearchDropdownOpen(false)}
           onMouseEnter={() => setIsSearchDropdownOpen(true)}
           className="font-mukta flex flex-col gap-4 justify-between"
         >
-          <div className="flex justify-between items-center">
-            <span className="text-3xl">Search Results </span>
-            <span className="italic  text-md text-gray-800 underline underline-offset-2">
+          <div className="flex sm:flex-col md:flex-row justify-between md:items-center">
+            <span className="sm:text-2xl lg:text-3xl">Search Results </span>
+            <span className="italic sm:text-sm md:text-md text-gray-800 underline underline-offset-2">
               Edit Search / Apply Filters
             </span>
           </div>
@@ -96,8 +96,13 @@ const SearchPage = () => {
       </div>
       {hotels?.data.length > 0 ? (
         <div className="lg:col-start-2 md:col-end-5 sm:col-start-1 sm:row-start-2 lg:row-start-2 flex flex-col gap-7 md:row-end-3">
-          <div className="float-left items-center">
-            <div className="float-right">
+          <div className="flex items-center justify-between">
+            <p className="font-mukta sm:text-lg md:text-2xl lg:text-3xl text-gray-900 text-center">
+              {hotels?.pagination.totalDocuments}{" "}
+              {hotels?.pagination.totalDocuments <= 1 ? "hotel" : "hotels"}{" "}
+              found in {toTitleCase(search.destination)}
+            </p>
+            <div className="float-right -translate-y-1">
               <Dropdown
                 isDropdownOpen={isDropdownOpen}
                 setIsDropdownOpen={setIsDropdownOpen}
@@ -105,22 +110,17 @@ const SearchPage = () => {
                 setResults={setResultsPerPage}
               />
             </div>
-            <p className="font-mukta sm:text-2xl lg:text-3xl text-gray-900">
-              {hotels?.pagination.totalDocuments}{" "}
-              {hotels?.pagination.totalDocuments <= 1 ? "hotel" : "hotels"}{" "}
-              found in {toTitleCase(search.destination)}
-            </p>
           </div>
           {hotels?.data.map((hotel) => (
             <HotelViewer hotel={hotel} key={hotel._id} />
           ))}
         </div>
       ) : (
-        <div className="font-mukta text-3xl">
+        <div className="font-mukta sm:text-2xl md:text-3xl">
           No hotels found matching your search, try editing your search
         </div>
       )}
-      {!hotels?.length && (
+      {hotels?.length > resultsPerPage && (
         <div className="md:col-start-1 md:col-end-5 sm:col-start-1 sm:col-end-1 w-full flex justify-center row-start-3">
           <Pagination
             totalPages={hotels?.pagination.totalPages}

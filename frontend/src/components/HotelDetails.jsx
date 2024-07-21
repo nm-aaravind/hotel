@@ -42,29 +42,35 @@ const HotelDetails = () => {
   if (isFetching) return <Loader />;
   return (
     <div className="w-full text-gray-900 mb-20">
-      <div className="flex flex-col sm:w-full sm:px-5 lg:w-3/4 mx-auto pt-10 gap-8">
+      <div className="flex flex-col sm:w-full sm:px-3 lg:w-3/4 mx-auto pt-10 gap-8">
         <div className="flex justify-between">
           <a
             href="#overview"
-            className="transition-all hover:bg-gray-300 border-b-2 py-3 border-federal text-center font-mukta sm:text-lg lg:text-xl font-light w-full "
+            className="transition-all hover:bg-gray-300 border-b-2 py-3 border-federal text-center font-mukta sm:text-md md:text-lg lg:text-xl font-light w-full "
           >
             Overview
           </a>
           <a
             href="#facilities"
-            className="transition-all hover:bg-gray-300 text-center py-3 font-mukta sm:text-lg lg:text-xl font-light w-full"
+            className="transition-all hover:bg-gray-300 text-center py-3 font-mukta sm:text-md md:text-lg lg:text-xl font-light w-full"
           >
             Facilities
           </a>
           <a
             href="#info"
-            className="transition-all hover:bg-gray-300 text-center py-3 font-mukta sm:text-lg lg:text-xl font-light w-full"
+            className="sm:block md:hidden transition-all hover:bg-gray-300 text-center py-3 font-mukta sm:text-md md:text-lg lg:text-xl font-light w-full"
+          >
+            Prices
+          </a>
+          <a
+            href="#info"
+            className="sm:hidden md:block transition-all hover:bg-gray-300 text-center py-3 font-mukta sm:text-md md:text-lg lg:text-xl font-light w-full"
           >
             Info & Prices
           </a>
           <a
             href="#reviews"
-            className="transition-all hover:bg-gray-300 text-center py-3 font-mukta sm:text-lg lg:text-xl font-light w-full"
+            className="transition-all hover:bg-gray-300 text-center py-3 font-mukta sm:text-md md:text-lg lg:text-xl font-light w-full"
           >
             Reviews
           </a>

@@ -5,6 +5,11 @@ import { useQueryClient, useMutation } from "react-query";
 import { useAppContext } from "../../context/AppContext";
 import * as apiClient from "../../api/api.js";
 const HotelViewer = ({ hotel, admin }) => {
+  function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
   const queryClient = useQueryClient();
   const { showToast } = useAppContext();
   const { mutate: deleteHotel } = useMutation({
@@ -27,27 +32,27 @@ const HotelViewer = ({ hotel, admin }) => {
   });
   return (
     <div className="flex flex-col border border-gray-300 rounded-xl overflow-hidden">
-      <div className="relative flex gap-6 p-4 flex-nowrap sm:h-44 md:h-60 lg:h-72 overflow-hidden">
+      <div className="relative flex sm:gap-4 md:gap-6 sm:p-2 md:p-4 flex-nowrap sm:h-36 md:h-60 lg:h-72 overflow-hidden">
         <img
           src={
             hotel.imageURLS.length ? hotel.imageURLS[0]["secure_url"] : Hotel
           }
-          className={`aspect-square object-cover ${
+          className={`aspect-square sm:w-24 md:w-auto object-cover ${
             hotel.imageURLS.length ? "h-full" : "h-full p-8"
           } rounded-lg`}
         ></img>
-        <div className="flex flex-col md:p-3 lg:p-4 gap-2 w-full overflow-hidden">
+        <div className="flex flex-col md:p-3 lg:p-4 md:gap-2 w-full overflow-hidden">
           <Link
             to={`/hotel/${hotel._id}`}
-            className="sm:text-2xl lg:text-3xl w-fit font-mukta text-gray-900 hover:text-red-800"
+            className="sm:text-xl sm:mt-1 md:text-2xl lg:text-3xl w-fit font-mukta text-gray-900 hover:text-red-800"
           >
             {hotel.hotelName}
           </Link>
-          <span className="sm:text-lg lg:text-xl font-extralight text-gray-900 font-mukta underline">
-            {hotel.city}
+          <span className="sm:text-md md:text-lg lg:text-xl font-extralight text-gray-900 font-mukta underline">
+            {toTitleCase(hotel.city)}
           </span>
-          <p className="sm:text-lg lg:text-xl h-full block font-mukta font-light text-gray-600">
-            <p className="sm:line-clamp-2 lg:line-clamp-3"> {hotel.description}</p>
+          <p className="sm:text-sm md:text-lg lg:text-xl h-full block font-mukta font-light text-gray-600">
+            <p className="sm:line-clamp-3 md:line-clamp-2 lg:line-clamp-3 w-full"> {hotel.description}</p>
           </p>
           <div className="sm:hidden md:flex gap-3 text-md font-mukta font-light text-gray-500 items-center">
             {facilitiesArray.length > 0 && !admin && (
