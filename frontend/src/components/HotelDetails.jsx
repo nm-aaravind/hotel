@@ -38,11 +38,10 @@ const HotelDetails = () => {
       });
     }
   }
-  console.log(hotel)
   if (isFetching) return <Loader />;
   return (
     <div className="w-full text-gray-900 mb-20">
-      <div className="flex flex-col sm:w-full sm:px-3 lg:w-3/4 mx-auto pt-10 gap-8">
+      <div className="flex flex-col sm:w-full sm:px-3 lg:w-3/4 mx-auto sm:pt-5 md:pt-10 gap-8">
         <div className="flex justify-between">
           <a
             href="#overview"
@@ -75,25 +74,25 @@ const HotelDetails = () => {
             Reviews
           </a>
         </div>
-        <div className="flex flex-col gap-6 font-mukta font-light sm:text-lg lg:text-xl text-justify">
+        <div className="flex flex-col sm:gap-4 md:gap-6 font-mukta font-light sm:text-lg lg:text-xl text-justify">
           <div className="font-mukta">
             {app.isLoggedIn.value ? (
               <a
                 href="#info"
-                className="float-right bg-moonstone transition-all hover:bg-moontone-hover sm:p-2 lg:p-3 font-mukta sm:text-lg lg:text-xl rounded-md text-white font-light ml-8"
+                className="sm:hidden md:block md:float-right ml-10 bg-moonstone transition-all hover:bg-moontone-hover sm:p-2 lg:p-3 font-mukta sm:text-lg lg:text-xl rounded-md text-white font-light"
               >
                 Reserve
               </a>
             ) : (
               <button
                 onClick={() => toggleModalVisible(true)}
-                className="float-right bg-moonstone hover:bg-moontone-hover p-3 transition-all font-mukta text-xl rounded-md text-white font-light"
+                className="sm:hidden md:block md:float-right bg-moonstone hover:bg-moontone-hover p-3 ml-10 transition-all font-mukta text-xl rounded-md text-white font-light"
               >
                 Log in to reserve
               </button>
             )}
             <h1 className="sm:text-3xl lg:text-4xl">{hotel?.hotel.hotelName}</h1>
-            <p className="sm:text-lg lg:text-xl font-light text-gray-800">
+            <p className="sm:text-lg lg:text-xl font-extralight text-gray-800">
               {hotel?.hotel.address +
                 "," +
                 hotel?.hotel.city +
@@ -114,16 +113,16 @@ const HotelDetails = () => {
           </div>
           } */}
           <ImageSlider images={hotel?.hotel.imageURLS} />
-          <span className="sm:text-2xl lg:text-3xl mt-4">About the Property</span>
-          {hotel?.hotel.description}
+          <span className="text-3xl sm:mt-2 md:mt-4">About the Property</span>
+          <span className="font-extralight sm:text-md md:text-lg lg:text-xl">{hotel?.hotel.description}</span>
           {hotel?.hotel.facilities.length > 0 && (
             <span id="facilities" className="text-3xl">
               Facilities
             </span>
           )}
-          <div className="flex w-full flex-wrap gap-3 text-md font-mukta font-light text-gray-500 items-center">
+          <div className="flex w-full flex-wrap gap-3 sm:text-sm md:text-md font-mukta font-light text-gray-500 items-center">
             {hotel?.hotel.facilities.map((facility) => (
-              <p className="border border-gray-500 rounded p-2 sm:text-lg whitespace-nowrap">
+              <p className="border border-gray-500 rounded sm:p-1 md:p-2 sm:text-md md:text-lg whitespace-nowrap">
                 {facility}
               </p>
             ))}

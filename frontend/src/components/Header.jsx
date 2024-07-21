@@ -22,7 +22,7 @@ const Header = ({ toggleModalVisible }) => {
 
   return (
     <div className="text-white bg-federal py-3 font-raleway sticky z-50 w-full font-extralight">
-      <nav className="mx-auto sm:w-full sm:px-5 md:w-[90%]">
+      <nav className="mx-auto sm:w-full sm:px-9 md:w-[90%]">
         <ul className="flex justify-between items-center gap-5">
           <li>
             <Link

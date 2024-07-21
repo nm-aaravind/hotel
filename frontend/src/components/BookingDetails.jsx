@@ -48,7 +48,7 @@ const BookingDetails = () => {
       search.roomCount
     ],
     onError: (error) => {
-      showToast({ message: error.message, type: "ERROR" });
+      app.showToast({ message: error.message, type: "ERROR" });
     },
     enabled: !!state.hotel.hotel._id && numberOfNights > 0,
   });

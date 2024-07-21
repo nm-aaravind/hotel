@@ -44,7 +44,7 @@ const Security = () => {
           onSubmit={methods.handleSubmit(formSubmit)}
           className="flex flex-col"
         >
-          <div className="p-5 border-b flex border-gray-300 font-mukta sm:text-lg lg:text-xl gap-8">
+          <div className="sm:p-3 md:p-5 border-b flex border-gray-300 font-mukta sm:text-lg lg:text-xl gap-8">
             <span className="min-w-36 whitespace-nowrap">Change Password</span>
             {user.oAuth == "oauth" ? (
               <p className="texxt-lg font-light">You are signed in with Google</p>
@@ -80,7 +80,7 @@ const Security = () => {
           </div>
         </form>
       </FormProvider>
-      <div className="p-5 border-b border-gray-300 font-mukta flex gap-8 items-center">
+      <div className="sm:p-3 md:p-5 border-b border-gray-300 font-mukta flex gap-8 items-center">
         <div>
           <span className="block min-w-36 text-red-600 sm:text-lg lg:text-xl">
             Delete Tourvista account

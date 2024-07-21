@@ -70,7 +70,7 @@ const UserProfile = () => {
           onSubmit={methods.handleSubmit(formSubmit)}
           className="flex flex-col"
         >
-          <div className="p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex gap-8">
+          <div className="sm:p-3 md:p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex sm:flex-col md:flex-row md:gap-8">
             <span className="min-w-36">Name</span>
             <input
               className="font-light focus-within:outline-none bg-inherit"
@@ -78,7 +78,7 @@ const UserProfile = () => {
               {...methods.register("name")}
             />
           </div>
-          <div className="p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex gap-8 items-center">
+          <div className="sm:p-3 md:p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex sm:flex-col md:flex-row md:gap-8">
             <span className="min-w-36">Email Id</span>
             <input
               className="font-light focus-within:outline-none bg-inherit"
@@ -87,12 +87,12 @@ const UserProfile = () => {
               {...methods.register("email")}
             />
             {user?.oAuth === "oauth" && (
-              <p className="p-1 bg-green-600 text-white rounded sm:text-sm md:text-md lg:text-md font-mukta font-light">
+              <p className="sm:hidden lg:block p-1 bg-green-600 text-white rounded sm:text-sm md:text-md lg:text-md font-mukta font-light">
                 Signed in with Google
               </p>
             )}
           </div>
-          <div className="p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex gap-8">
+          <div className="sm:p-3 md:p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex sm:flex-col md:flex-row md:gap-8">
             <span className="min-w-36">Address</span>
             <input
               className="font-light focus-within:outline-none bg-inherit"
@@ -100,7 +100,7 @@ const UserProfile = () => {
               {...methods.register("address")}
             />
           </div>
-          <div className="p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex gap-8">
+          <div className="sm:p-3 md:p-5 border-b border-gray-300 font-mukta sm:text-lg lg:text-xl flex sm:flex-col md:flex-row md:gap-8">
             <span className="min-w-36">Phone Number</span>
             <input
               className="font-light focus-within:outline-none bg-inherit"
@@ -111,7 +111,7 @@ const UserProfile = () => {
           <button
             type="submit"
             disabled={!isDirty}
-            className="bg-moonstone hover:bg-moontone-hover transition-colors py-2 px-5 mt-6 text-lg font-mukta text-white w-fit ml-auto rounded disabled:bg-moonstone/40"
+            className="bg-moonstone hover:bg-moontone-hover transition-colors py-2 px-5 mt-6 text-lg font-mukta text-white w-fit ml-auto rounded disabled:bg-moonstone/40 sm:mb-10"
           >
             Update
           </button>

@@ -6,7 +6,7 @@ import ManyUsers from "../assets/many-users.svg";
 const   SettingsLayout = () => {
   return (
     <div className="w-full text-gray-900">
-      <div className="lg:grid lg:grid-cols-[300px_1fr] sm:flex sm:flex-col lg:w-3/4 sm:px-4 mx-auto lg:pt-16 sm:pt-10 gap-10">
+      <div className="lg:grid lg:grid-cols-[300px_1fr] sm:flex sm:flex-col lg:w-3/4 sm:px-4 mx-auto lg:pt-16 sm:pt-7 md:pt-10 gap-10">
       <div className="flex justify-between lg:hidden">
           <NavLink
           to={"/mysettings/profile"}

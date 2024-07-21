@@ -104,23 +104,23 @@ const OtherTravellers = () => {
             )}
             {travellers?.length > 0 &&
               travellers.map((traveller) => (
-                <div className="grid grid-cols-5 sm:grid-rows-2 lg:grid-rows-1">
+                <div className="grid grid-cols-5 gap-4 sm:grid-rows-2 lg:grid-rows-1">
                   <div
-                    className={`p-3 relative col-start-1 sm:col-end-5 border-gray-300
+                    className={`p-3 relative col-start-1 sm:col-end-6 md:col-end-5 border-b border-gray-300
                     } font-mukta text-lg whitespace-nowrap flex items-center`}
                   >
                     <span className="sm:min-w-20 lg:min-w-24">Name</span>
                     <p className="font-light">{traveller.name}</p>
                   </div>
                   <div
-                    className={`p-3 border-b relative sm:col-start-1 sm:row-start-2 col-end-4 border-gray-300
+                    className={`p-3 border-b relative sm:col-start-1 sm:col-end-6 sm:row-start-2 col-end-4 border-gray-300
                     } font-mukta text-lg whitespace-nowrap flex items-center`}
                   >
                     <span className="sm:min-w-20 lg:min-w-24">Age</span>
                     <p className="font-light">{traveller.age}</p>
                   </div>
                   <div
-                    className={`p-3 border-b relative col-start-4 sm:col-end-6 border-gray-300
+                    className={`p-3 border-b relative sm:row-start-3 md:row-start-2 sm:col-start-1 md:col-start-4 sm:col-end-6 border-gray-300
                     font-mukta text-lg whitespace-nowrap flex items-center`}
                   >
                     <span className="sm:min-w-20 lg:min-w-24">Gender</span>
@@ -128,7 +128,7 @@ const OtherTravellers = () => {
                       {traveller.gender == "M" ? "Male" : "Female"}
                     </p>
                   </div>
-                  <button onClick={() => removeTravellers(traveller._id)} className="lg:col-start-5 row-start-1 sm:col-start-5 py-2 rounded-md self-center hover:bg-red-600 transition-colors ml-7 bg-red-500 sm:text-md lg:text-lg font-mukta text-white disabled:bg-red-400">
+                  <button onClick={() => removeTravellers(traveller._id)} className="sm:col-start-1 sm:col-end-6 md:col-start-5 lg:row-start-1 py-2 rounded-md self-center hover:bg-red-600 transition-colors md:ml-7 bg-red-500 sm:text-md lg:text-lg font-mukta text-white disabled:bg-red-400">
                     Remove
                   </button>
                 </div>
@@ -136,9 +136,9 @@ const OtherTravellers = () => {
             <span className="sm:text-2xl">Add travelers</span>
             {fields.map((field, index) => {
               return (
-                <div className="grid grid-cols-5 grid-rows-2" key={field.id}>
+                <div className="grid grid-cols-5 grid-rows-2 gap-4" key={field.id}>
                   <div
-                    className={`p-2 border-b relative col-start-1 col-end-5 ${
+                    className={`p-2 border-b relative col-start-1 sm:col-end-6 md:col-end-5 ${
                       !(
                         errors?.travellers?.length > index &&
                         errors.travellers[index].name
@@ -167,7 +167,7 @@ const OtherTravellers = () => {
                       )}
                   </div>
                   <div
-                    className={`p-2 border-b relative col-start-1 col-end-4 ${
+                    className={`p-2 border-b relative col-start-1 sm:col-end-6 md:col-end-4 ${
                       !(
                         errors?.travellers?.length > index &&
                         errors.travellers[index].age
@@ -198,7 +198,7 @@ const OtherTravellers = () => {
                       )}
                   </div>
                   <div
-                    className={`p-2 border-b relative col-start-4 col-end-6 ${
+                    className={`p-2 border-b relative sm:col-start-1 md:col-start-4 col-end-6 ${
                       !(
                         errors?.travellers?.length > index &&
                         errors.travellers[index].gender
@@ -220,7 +220,7 @@ const OtherTravellers = () => {
                       })}
                     /> */}
                     <select
-                      className="bg-cloud focus-within:outline-none font-light cursor-pointer"
+                      className="bg-cloud focus-within:outline-none w-full font-light cursor-pointer"
                       {...methods.register(`travellers.${index}.gender`, {
                         required: "select one option",
                       })}
@@ -249,7 +249,7 @@ const OtherTravellers = () => {
                   {index >= 0 && (
                     <button
                       disabled={index == 0}
-                      className="col-start-5 py-2 rounded-md self-center row-start-1 hover:bg-red-600 transition-colors ml-7 bg-red-500 text-lg font-mukta text-white disabled:bg-red-400"
+                      className="sm:col-start-1 sm:col-end-6 md:col-start-5 sm:py-1 md:py-2 rounded-md self-center  md:row-start-1 hover:bg-red-600 transition-colors md:ml-7 bg-red-500 sm:text-md md:text-lg font-mukta text-white disabled:bg-red-400"
                       onClick={() => remove(index)}
                     >
                       Remove
@@ -259,7 +259,7 @@ const OtherTravellers = () => {
               );
             })}
           </div>
-          <button className="mb-10 self-end bg-moonstone hover:bg-moontone-hover p-2 px-4 transition-all font-mukta text-white text-xl rounded-md">
+          <button className="mb-10 self-end bg-moonstone hover:bg-moontone-hover p-2 px-4 transition-all font-mukta text-white sm:text-lg md:text-xl rounded-md">
             Add
           </button>
         </form>
