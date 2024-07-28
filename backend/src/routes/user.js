@@ -62,7 +62,7 @@ router.post('/login', loginValidation, async (req, res) => {
             })
         }
 
-        const pwCheck = await bcrypt.compare(password, user.password);
+        const pwCheck = bcrypt.compare(password, user.password);
 
         if (!pwCheck) {
             return res.status(400).json({

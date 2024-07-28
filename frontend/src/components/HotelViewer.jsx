@@ -70,12 +70,7 @@ const HotelViewer = ({ hotel, admin }) => {
       <div className="self-center sticky w-full bottom-0">
         {admin && (
           <div className="flex w-full">
-            <Link
-              to={`/hotel/edit/${hotel._id}`}
-              className="p-2 w-full text-center font-light font-mukta sm:text-lg lg:text-xl bg-moonstone hover:bg-moontone-hover text-white transition-all"
-            >
-              Edit
-            </Link>
+           
             <button
               onClick={() => {
                 deleteHotel(hotel._id);

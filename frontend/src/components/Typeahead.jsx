@@ -15,6 +15,7 @@ const Typeahead = ({ destination, setDestination }) => {
       setLoading(false);
     } catch (error) {}
   };
+  console.log(suggestions,"HEYEY")
   const debouncedFetch = _.debounce(fetchSuggestions, 300);
   useEffect(() => {
     if (inputValue.length > 0) {
@@ -43,13 +44,13 @@ const Typeahead = ({ destination, setDestination }) => {
             return (
               <p
                 onClick={(e) => {
-                  setDestination(city.city);
+                  setDestination(city);
                   setInputValue("");
                   setSuggestions([]);
                 }}
                 className="font-mukta rounded-sm w-full border border-gray-400 bg-white p-2 px-11 -translate-x-11 cursor-pointer hover:bg-gray-200 transition-all"
               >
-                {_.startCase(city.city)+ ", " + _.startCase(city.country)}
+                {_.startCase(city)}
               </p>
             );
           })}

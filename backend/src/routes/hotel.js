@@ -125,9 +125,9 @@ router.get("/hotel/:hotelid", async (req, res) => {
 router.get("/cities/:search", async (req, res) => {
     try {
         const search = req.params.search
-        const searchValues = await Hotel.find({ city: { $regex: search, $options: 'i' } }).select("city country -_id").limit(3)
+        const searchValues = await Hotel.distinct('city',{ city: { $regex: search, $options: 'i' } })
         return res.status(200).json({
-            data: searchValues
+            data: searchValues.splice(0,3)
         })
     } catch (error) {
         console.log(error)
