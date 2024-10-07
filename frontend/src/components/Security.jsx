@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../../api/api.js";
 import { useAppContext } from "../../context/AppContext.jsx";
 const Security = () => {
@@ -12,6 +12,7 @@ const Security = () => {
     },
   });
 
+  const queryClient = useQueryClient();
   const { user, showToast } = useAppContext();
   const { control, formState, reset } = methods;
   function formSubmit(formData) {
@@ -21,6 +22,8 @@ const Security = () => {
     mutationFn: apiClient.updatePassword,
     onSuccess: async (data) => {
       showToast({ message: "Password updated", type: "SUCCESS" });
+      await queryClient.invalidateQueries("validateToken");
+      await queryClient.invalidateQueries("getUserDetails");
       reset()
     },
     onError: (error) => {

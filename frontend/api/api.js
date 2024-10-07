@@ -37,6 +37,7 @@ export const validateToken = async () => {
 
 export const login = async (formData) => {
     try {
+        console.log(formData, "Data here")
         const response = await axios.post(`${API_BASE_URL}/api/users/login`, formData, {
             headers: {
                 "Content-Type": "application/json"

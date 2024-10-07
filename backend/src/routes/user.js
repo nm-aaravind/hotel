@@ -35,7 +35,7 @@ router.post('/register', signUpValidation, async (req, res) => {
         res.cookie("auth-token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'none',
+            // sameSite: 'none',
             maxAge: 86400000
         })
         return res.status(200).json({
@@ -62,7 +62,7 @@ router.post('/login', loginValidation, async (req, res) => {
             })
         }
 
-        const pwCheck = bcrypt.compare(password, user.password);
+        const pwCheck = await bcrypt.compare(password, user.password);
 
         if (!pwCheck) {
             return res.status(400).json({
@@ -77,7 +77,7 @@ router.post('/login', loginValidation, async (req, res) => {
         res.cookie("auth-token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: "none",
+            // sameSite: "none",
             maxAge: 86400000
         })
         return res.status(200).json({
@@ -102,7 +102,7 @@ router.post('/logout', async (req, res) => {
     res.clearCookie('auth-token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        // sameSite: 'none',
     })
     return res.status(200).json({
         message: "Signed out"
@@ -193,7 +193,7 @@ router.get("/google/redirect",passport.authenticate("google",{
     res.cookie("auth-token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        // sameSite: 'none',
         maxAge: 86400000
     })
     return res.send("<script>window.close();</script>")

@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import * as apiClient from "../../api/api.js";
-import _, { debounce } from "lodash";
+import _ from "lodash";
 const Typeahead = ({ destination, setDestination }) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -15,7 +15,6 @@ const Typeahead = ({ destination, setDestination }) => {
       setLoading(false);
     } catch (error) {}
   };
-  console.log(suggestions,"HEYEY")
   const debouncedFetch = _.debounce(fetchSuggestions, 300);
   useEffect(() => {
     if (inputValue.length > 0) {

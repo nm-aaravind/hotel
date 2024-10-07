@@ -12,7 +12,6 @@ import { useAppContext } from "../context/AppContext";
 import Home from "./components/Home.jsx";
 import HotelDetails from "./components/HotelDetails.jsx";
 import BookingDetails from "./components/BookingDetails.jsx";
-import EditHotel from "./components/EditHotel.jsx";
 import SearchPage from "./components/SearchPage.jsx";
 import UserProfile from "./components/UserProfile.jsx";
 import Settings from "./components/Settings.jsx";
